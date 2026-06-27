@@ -1,0 +1,2533 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MewtocolNet</name>
+    </assembly>
+    <members>
+        <member name="T:MewtocolNet.ComCassette.CassetteFinder">
+            <summary>
+            Provides a interface to modify and find PLC network cassettes also known as COM5
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.ComCassette.CassetteInformation">
+            <summary>
+            Information about the COM cassette
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.IsConfigurating">
+            <summary>
+            Indicates if the cassette is currently configurating
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.Name">
+            <summary>
+            Name of the COM cassette
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.UsesDHCP">
+            <summary>
+            Indicates the usage of DHCP
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.IPAddress">
+            <summary>
+            IP Address of the COM cassette
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.SubnetMask">
+            <summary>
+            Subnet mask of the cassette
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.GatewayAddress">
+            <summary>
+            Default gateway of the cassette
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.MacAddress">
+            <summary>
+            Mac address of the cassette
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.MacAddressStr">
+            <summary>
+            Mac address of the cassette formatted as a MAC string (XX:XX:XX:XX:XX) 
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.Endpoint">
+            <summary>
+            The source endpoint the cassette is reachable from
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.EndpointName">
+            <summary>
+            The name of the endpoint the device is reachable from, or null if not specifically defined
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.FirmwareVersion">
+            <summary>
+            Firmware version as string
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.Port">
+            <summary>
+            The tcp port of the cassette
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ComCassette.CassetteInformation.Status">
+            <summary>
+            Status of the cassette
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.ComCassette.CassetteStatus">
+            <summary>
+            Needs a list of all status codes.. hard to reverse engineer
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.ComCassette.CassetteStatus.Normal">
+            <summary>
+            Cassette is running as intended
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.ComCassette.CassetteStatus.DHCPError">
+            <summary>
+            Cassette DHCP resolution error
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.DateAndTime">
+            <summary>
+            A DateAndTime struct of 4 bytes represented as seconds from 2001-01-01 in the PLC<br/>
+            This also works for the PLC type TIME_OF_DAY and DATE
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.DWord">
+            <summary>
+            A DWord is a 16 bit value of 2 bytes
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.DWord.Item(System.Int32)">
+            <summary>
+            Gets or sets the bit value at the given position
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.Word">
+            <summary>
+            A word is a 16 bit value of 2 bytes
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Word.Item(System.Int32)">
+            <summary>
+            Gets the bit value at the given position
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.MewtocolHelpers">
+            <summary>
+            Contains helper methods
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.SearchBytePattern(System.Byte[],System.Byte[])">
+            <summary>
+            Searches a byte array for a pattern
+            </summary>
+            <param name="src"></param>
+            <param name="pattern"></param>
+            <returns>The start index of the found pattern or -1</returns>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.BytesFromHexASCIIString(System.String)">
+            <summary>
+            Converts a string (after converting to upper case) to ascii bytes 
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.ParseRCSingleBit(System.String)">
+            <summary>
+            Parses a return message as RCS single bit
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.ParseRCMultiBit(System.String)">
+            <summary>
+            Parses a return message as RCS multiple bits
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.ParseResponseStringAsBytes(System.String)">
+            <summary>
+            Parses a return string from the PLC as a raw byte array <br/>
+            Example:
+            <code>
+                  ↓Start ↓end
+            %01$RD0100020010\r
+            </code>
+            This will return the byte array:
+            <code>
+            [0x01, 0x00, 0x02, 0x00]
+            </code>
+            </summary>
+            <param name="_onString"></param>
+            <returns>A <see cref="T:byte[]"/> or null of failed</returns>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.SplitInParts(System.String,System.Int32)">
+            <summary>
+            Splits a string into even parts
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.SplitByAlternatingCase(System.String)">
+            <summary>
+            Splits a string by uppercase words
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.JoinSplitByUpperCase(System.String,System.String)">
+            <summary>
+            Splits a string by uppercase words and joins them with the given seperator
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.HexStringToByteArray(System.String)">
+            <summary>
+            Converts a hex string (AB01C1) to a byte array
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.ToHexString(System.Byte[],System.String)">
+            <summary>
+            Converts a byte array to a hexadecimal string
+            </summary>
+            <param name="seperator">Seperator between the hex numbers</param>
+            <param name="arr">The byte array</param>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.BigToMixedEndian(System.Byte[])">
+            <summary>
+            Switches byte order from mixed to big endian
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.IsBoolean(MewtocolNet.RegisterPrefix)">
+            <summary>
+            Checks if the register type is boolean
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.IsNumericDTDDT(MewtocolNet.RegisterPrefix)">
+            <summary>
+            Checks if the register type numeric
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.IsPhysicalInOutType(MewtocolNet.RegisterPrefix)">
+            <summary>
+            Checks if the register type is an physical in or output of the plc
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.GetSynonims(MewtocolNet.PlcType)">
+            <summary>
+            Gets synonim names for a plc type enum
+            </summary>
+            <returns>All or just one of there are no synonims for the same <see cref="T:MewtocolNet.PlcType"/></returns>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.ToName(MewtocolNet.PlcType)">
+            <summary>
+            Converts the enum to a plc name string
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.ToNameDecompose(MewtocolNet.PlcType)">
+            <summary>
+            Converts the enum to a decomposed <see cref="T:MewtocolNet.ParsedPlcName"/> struct
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.IsDiscontinued(MewtocolNet.PlcType)">
+            <summary>
+            Checks if the PLC type is discontinued
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolHelpers.Map``2(``0,``1)">
+            <summary>
+            Maps the source object to target object.
+            </summary>
+            <typeparam name="T">Type of target object.</typeparam>
+            <typeparam name="TU">Type of source object.</typeparam>
+            <param name="target">Target object.</param>
+            <param name="source">Source object.</param>
+            <returns>Updated target object.</returns>
+        </member>
+        <member name="T:MewtocolNet.ParsedPlcName">
+            <summary>
+            A structure containing the PLC name parsed
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ParsedPlcName.WholeName">
+            <summary>
+            Whole name of the PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ParsedPlcName.Group">
+            <summary>
+            The family group of the PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ParsedPlcName.Size">
+            <summary>
+            The Memory size of the PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ParsedPlcName.SubTypes">
+            <summary>
+            The subtype strings of the plc
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ParsedPlcName.TypeCode">
+            <summary>
+            Typecode of the parsed string
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ParsedPlcName.EncodedName">
+            <summary>
+            The encoded name, same as enum name
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.ParsedPlcName.IsDiscontinuedModel">
+            <summary>
+            True if the model is discontinued
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.ParsedPlcName.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.PlcFormat.ToPlcTime(System.TimeSpan)">
+            <summary>
+            Gets the TimeSpan as a PLC representation string fe.
+            <code>
+            T#1h10m30s20ms
+            </code>
+            </summary>
+            <param name="timespan"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.PlcFormat.ToBitString(System.Collections.BitArray)">
+            <summary>
+            Turns a bit array into a 0 and 1 string
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.IPlc">
+            <summary>
+            Provides a interface for Panasonic PLCs
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.IPlc.Connected">
+            <summary>
+            Fires when the interface is fully connected to a PLC
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.IPlc.Reconnected">
+            <summary>
+            Fires when a reconnect attempt was successfull
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.IPlc.ReconnectTryStarted">
+            <summary>
+            Fires when the interfaces makes a reconnect try to the PLC
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.IPlc.Disconnected">
+            <summary>
+            Fires when the plc/interface connection was fully closed
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.IPlc.RegisterChanged">
+            <summary>
+            Fires when the value of a register changes
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.IPlc.ModeChanged">
+            <summary>
+            Plc mode was changed
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.IsConnected">
+            <summary>
+            The current connection state of the interface
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.IsSending">
+            <summary>
+            This device is sending a message to the plc
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.BytesPerSecondUpstream">
+            <summary>
+            The current transmission speed in bytes per second
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.IsReceiving">
+            <summary>
+            This device is receiving a message from the plc
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.BytesPerSecondDownstream">
+            <summary>
+            The current transmission speed in bytes per second
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.PollerCycleDurationMs">
+            <summary>
+            Current poller cycle duration
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.IsRunMode">
+            <summary>
+            Shorthand indicator if the plc is in RUN mode
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.QueuedMessages">
+            <summary>
+            Currently queued message count
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.PlcInfo">
+            <summary>
+            Generic information about the connected PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.StationNumber">
+            <summary>
+            The station number of the PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.ConnectionInfo">
+            <summary>
+            A connection info string
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.ConnectTimeout">
+            <summary>
+            The initial connection timeout in milliseconds
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.ConnectAsync(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Tries to establish a connection with the device asynchronously
+            </summary>
+            <param name="onConnected">A callback for excecuting something inside the plc connetion process</param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.IPlc.DisconnectAsync">
+            <summary>
+            Disconnects the device from its current plc connection 
+            and awaits the end of all asociated tasks
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.Disconnect">
+            <summary>
+            Disconnects the device from its current plc connection
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.StopReconnecting">
+            <summary>
+            Stops a running reconnect task
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.WithReconnectTask(System.Func{System.Int32,System.Threading.Tasks.Task})">
+            <summary>
+            Adds a task to each reconnect cycle that is run before each individual try
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.SetOperationModeAsync(System.Boolean)">
+            <summary>
+            Changes the PLCs operation mode to the given one
+            </summary>
+            <param name="setRun">True for RUN mode, false for PROG mode</param>
+            <returns>The success state of the write operation</returns>
+        </member>
+        <member name="M:MewtocolNet.IPlc.ToggleOperationModeAsync">
+            <summary>
+            Toggles between RUN and PROG mode
+            </summary>
+            <returns>The success state of the write operation</returns>
+        </member>
+        <member name="M:MewtocolNet.IPlc.RestartProgramAsync">
+            <summary>
+            Restarts the plc program
+            </summary>
+            <returns>The success state of the write operation</returns>
+        </member>
+        <member name="M:MewtocolNet.IPlc.ReadProgramAsync">
+            <summary>
+            Reads the program from the connected plc
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.IPlc.FactoryResetAsync">
+            <summary>
+            Factory resets the PLC, this includes the current program
+            and data in the EEPROM
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.IPlc.AwaitFirstDataCycleAsync">
+            <summary>
+            Use this to await the first poll iteration after connecting,
+            This also completes if the initial connection fails
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.UpdateAsync">
+            <summary>
+            Runs a single poller cycle manually,
+            useful if you want to use a custom update frequency
+            </summary>
+            <returns>The number of inidvidual mewtocol commands sent</returns>
+        </member>
+        <member name="M:MewtocolNet.IPlc.GetConnectionInfo">
+            <summary>
+            Gets the connection info string
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.GetRegister(System.String)">
+            <summary>
+            Gets a register from the plc by name
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.GetAllRegisters">
+            <summary>
+            Gets all registers from the plc
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.BuildRegisters(System.Action{MewtocolNet.RegisterBuilding.BuilderPatterns.RBuildMulti})">
+            <summary>
+            Builds and adds registers to the device
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:MewtocolNet.IPlc.ClearAllRegisters">
+            <summary>
+            Clears all registers atached to the interface
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlc.Explain">
+            <summary>
+            Explains the register internal layout at this moment in time
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlc.MemoryAreas">
+            <summary>
+            A readonly list of the underlying memory areas
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.IPlcEthernet">
+            <summary>
+            Provides a interface for Panasonic PLCs over a ethernet connection
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcEthernet.IpAddress">
+            <summary>
+            The current IP of the PLC connection
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcEthernet.Port">
+            <summary>
+            The current port of the PLC connection
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcEthernet.HostEndpoint">
+            <summary>
+            The host ip endpoint, leave it null to use an automatic interface
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlcEthernet.ConfigureConnection(System.String,System.Int32,System.Int32)">
+            <summary>
+            Configures the serial interface
+            </summary>
+            <param name="_ip">IP adress of the PLC</param>
+            <param name="_port">Port of the PLC</param>
+            <param name="_station">Station Number of the PLC</param>
+        </member>
+        <member name="T:MewtocolNet.IPlcSerial">
+            <summary>
+            Provides a interface for Panasonic PLCs over a serial port connection
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcSerial.PortName">
+            <summary>
+            Port name of the serial port that this device is configured for
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcSerial.SerialBaudRate">
+            <summary>
+            The serial connection baud rate that this device is configured for
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcSerial.SerialDataBits">
+            <summary>
+            The serial connection data bits
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcSerial.SerialParity">
+            <summary>
+            The serial connection parity
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcSerial.SerialStopBits">
+            <summary>
+            The serial connection stop bits
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.IPlcSerial.RtsEnabled">
+            <summary>
+            Is RTS (Request to send) enabled?
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.IPlcSerial.ConfigureConnection(System.String,System.Int32,System.Int32,System.IO.Ports.Parity,System.IO.Ports.StopBits,System.Boolean,System.Int32)">
+            <summary>
+            Sets up the connection settings for the device
+            </summary>
+            <param name="_portName">Port name of COM port</param>
+            <param name="_baudRate">The serial connection baud rate</param>
+            <param name="_dataBits">The serial connection data bits</param>
+            <param name="_parity">The serial connection parity</param>
+            <param name="_stopBits">The serial connection stop bits</param>
+            <param name="_rtsEnable">Is RTS (Request to send) enabled?</param>
+            <param name="_station">The station number of the PLC</param>
+        </member>
+        <member name="M:MewtocolNet.IPlcSerial.ConnectAsync(System.Func{System.Threading.Tasks.Task},System.Action)">
+            <summary>
+            Tries to establish a connection with the device asynchronously
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.Logging.Logger">
+            <summary>
+            Logging module for all PLCs
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Logging.Logger.LogLevel">
+            <summary>
+            Sets the loglevel for the global logging module
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Logging.Logger.DefaultTargets">
+            <summary>
+            Defines the default output logger targets
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Logging.Logger.OnNewLogMessage(System.Action{System.DateTime,MewtocolNet.Logging.LogLevel,System.String},System.Nullable{MewtocolNet.Logging.LogLevel})">
+            <summary>
+            Gets invoked whenever a new log message is ready
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.Logging.LogLevel">
+            <summary>
+            The loglevel of the logging module
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.Logging.LogLevel.None">
+            <summary>
+            Logs nothing
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.Logging.LogLevel.Error">
+            <summary>
+            Logs only errors
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.Logging.LogLevel.Info">
+            <summary>
+            Logs info like connection establish and loss
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.Logging.LogLevel.Change">
+            <summary>
+            Logs only state changes
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.Logging.LogLevel.Verbose">
+            <summary>
+            Logs all errors, state changes, and messages
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.Logging.LogLevel.Critical">
+            <summary>
+            Logs all types including network traffic
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.Mewtocol">
+            <summary>
+            Builder helper for mewtocol interfaces
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.GetSerialPortNames">
+            <summary>
+            Lists all usable COM port names
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.GetUseableBaudRates">
+            <summary>
+            Lists all usable serial baud rates
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.GetSourceEndpoints">
+            <summary>
+            Lists all useable source endpoints of the device this is running on for usage with PLCs
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.GetUseableNetInterfaces">
+            <summary>
+            Lists all useable network interfaces of the device this is running on for usage with PLCs
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.Ethernet(System.String,System.Int32,System.Int32)">
+            <summary>
+            Builds a ethernet based Mewtocol Interface
+            </summary>
+            <param name="ip"></param>
+            <param name="port"></param>
+            <param name="station">Plc station number 0xEE for direct communication</param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.Ethernet(System.Net.IPAddress,System.Int32,System.Int32)">
+            <summary>
+            Builds a ethernet based Mewtocol Interface
+            </summary>
+            <param name="ip"></param>
+            <param name="port"></param>
+            <param name="station">Plc station number 0xEE for direct communication</param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.Serial(System.String,MewtocolNet.BaudRate,MewtocolNet.DataBits,System.IO.Ports.Parity,System.IO.Ports.StopBits,System.Boolean,System.Int32)">
+            <summary>
+            Builds a serial port based Mewtocol Interface
+            </summary>
+            <param name="portName">System port name</param>
+            <param name="baudRate">Baud rate of the plc toolport</param>
+            <param name="dataBits">DataBits of the plc toolport</param>
+            <param name="parity">Parity rate of the plc toolport</param>
+            <param name="stopBits">Stop bits of the plc toolport</param>
+            <param name="rtsEnabled">Is RTS (Request to send) enabled?</param>
+            <param name="station">Plc station number 0xEE for direct communication</param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.SerialAuto(System.String,System.Boolean,System.Int32)">
+            <summary>
+            Builds a serial mewtocol interface that finds the correct settings for the given port name automatically
+            </summary>
+            <param name="portName"></param>
+            <param name="rtsEnabled">Is RTS (Request to send) enabled?</param>
+            <param name="station">Plc station number 0xEE for direct communication</param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PollLevelConfigurator.SetLevel(System.Int32,System.TimeSpan)">
+            <summary>
+            Sets the poll level for the given key
+            </summary>
+            <param name="level">The level to reference</param>
+            <param name="interval">Delay between poll requests</param>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInitEth`1.FromSource(System.Net.IPEndPoint)">
+            <summary>
+            Sets the source of the outgoing ethernet connection
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInitEth`1.FromSource(System.String,System.Int32)">
+            <summary>
+            Sets the source of the outgoing ethernet connection
+            </summary>
+            <param name="ip">IP address of the source interface (Format: 127.0.0.1)</param>
+            <param name="port">Port of the source interface</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithPoller">
+            <summary>
+            Attaches a auto poller to the interface that reads all registers
+            cyclic
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithInterfaceSettings(System.Action{MewtocolNet.SetupClasses.InterfaceSettings})">
+            <summary>
+            General setting for the memory manager
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithCustomPollLevels(System.Action{MewtocolNet.Mewtocol.PollLevelConfigurator})">
+            <summary>
+            A builder for poll custom levels
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithRegisterCollections(System.Action{MewtocolNet.Mewtocol.RegCollector})">
+            <summary>
+            A builder for attaching register collections
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithRegisters(System.Action{MewtocolNet.RegisterBuilding.BuilderPatterns.RBuildMulti})">
+            <summary>
+            A builder for attaching register collections
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithReconnectTask(System.Func{System.Int32,System.Threading.Tasks.Task})">
+            <summary>
+            Adds a task to each reconnect cycle that is run before each individual try
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithHeartbeatTask(System.Func{MewtocolNet.IPlc,System.Threading.Tasks.Task},System.Boolean)">
+            <summary>
+            Adds a task to each heartbeat cycle that is run before each individual cycle request
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.WithHeartbeatTask(System.Func{System.Threading.Tasks.Task},System.Boolean)">
+            <summary>
+            Repeats the passed method each time the hearbeat is triggered,
+            use 
+            </summary>
+            <param name="heartBeatAsync"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.DisableHeartBeat">
+            <summary>
+            Disables all heartbeat tasks
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.PostInit`1.Build">
+            <summary>
+            Builds and returns the final plc interface
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Mewtocol.EndInitSetup`1.Build">
+            <summary>
+            Builds and returns the final plc interface
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolFrameResponse.op_Equality(MewtocolNet.MewtocolFrameResponse,MewtocolNet.MewtocolFrameResponse)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolFrameResponse.op_Inequality(MewtocolNet.MewtocolFrameResponse,MewtocolNet.MewtocolFrameResponse)">
+            <inheritdoc/>
+        </member>
+        <member name="T:MewtocolNet.MewtocolInterface">
+            <summary>
+            The PLC com interface class
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.MewtocolInterface.Connected">
+            <inheritdoc/>
+        </member>
+        <member name="E:MewtocolNet.MewtocolInterface.Reconnected">
+            <inheritdoc/>
+        </member>
+        <member name="E:MewtocolNet.MewtocolInterface.ReconnectTryStarted">
+            <inheritdoc/>
+        </member>
+        <member name="E:MewtocolNet.MewtocolInterface.Disconnected">
+            <inheritdoc/>
+        </member>
+        <member name="E:MewtocolNet.MewtocolInterface.RegisterChanged">
+            <inheritdoc/>
+        </member>
+        <member name="E:MewtocolNet.MewtocolInterface.PropertyChanged">
+            <inheritdoc/>
+        </member>
+        <member name="E:MewtocolNet.MewtocolInterface.ModeChanged">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.QueuedMessages">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.Disposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.IsConnected">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.PlcInfo">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.StationNumber">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.IsSending">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.BytesPerSecondUpstream">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.IsReceiving">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.BytesPerSecondDownstream">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.IsRunMode">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.MewtocolVersion">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.ConnectionInfo">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.Register">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.ConnectTimeout">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.ConnectAsync(System.Func{System.Threading.Tasks.Task})">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.ReconnectAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.AwaitFirstDataCycleAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.DisconnectAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.Disconnect">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.GetConnectionInfo">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.WithReconnectTask(System.Func{System.Int32,System.Threading.Tasks.Task})">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.StopReconnecting">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.Explain">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.MemoryAreas">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.PollerActive">
+            <summary>
+            True if the poller is actvice (can be paused)
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterface.PollerCycleDurationMs">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.KillPoller">
+            <summary>
+            Kills the poller completely
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.AttachPoller">
+            <summary>
+            Attaches a continous reader that reads back the Registers and Contacts
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.UpdateAsync">
+            <summary>
+            Runs a single poller cycle manually,
+            useful if you want to use a custom update frequency
+            </summary>
+            <returns>The number of inidvidual mewtocol commands sent</returns>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.WithRegisterCollections(System.Collections.Generic.List{MewtocolNet.RegisterAttributes.RegisterCollection})">
+            <summary>
+            Adds the given register collection and all its registers with attributes to the register list
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.BuildRegisters(System.Action{MewtocolNet.RegisterBuilding.BuilderPatterns.RBuildMulti})">
+            <inheritdoc/>>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.ClearAllRegisters">
+            <inheritdoc/>>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.GetRegister(System.String)">
+            <inheritdoc/>>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.GetAllRegisters">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.GetInfoAsync(System.Boolean)">
+            <summary>
+            Gets generic information about the PLC
+            </summary>
+            <returns>A PLCInfo class</returns>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.GetMetadataAsync">
+            <summary>
+            Gets the metadata information for the PLC program
+            </summary>
+            <returns>The metadata or null of it isn't used by the PLC program</returns>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.SetOperationModeAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.RestartProgramAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.ToggleOperationModeAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.FactoryResetAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.WriteAreaByteRange(System.Int32,System.Byte[])">
+            <summary>
+            Writes a byte array to a span over multiple registers at once,
+            Rembember the plc can only store word so in order to write to a word array 
+            your byte array should be double the size
+            </summary>
+            /// <param name="start">start address of the array</param>
+            <param name="byteArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterface.ReadAreaByteRangeAsync(System.Int32,System.Int32,MewtocolNet.RegisterPrefix,System.Action{System.Double})">
+            <summary>
+            Reads the bytes from the start adress for counts byte length, 
+            doesn't block the receive thread
+            </summary>
+            <param name="start">Start adress</param>
+            <param name="byteCount">Number of bytes to get</param>
+            <param name="areaPrefix">The memory area to read</param>
+            <param name="onProgress">Gets invoked when the progress changes, contains the progress as a double from 0 - 1.0</param>
+            <returns>A byte array of the requested DT area</returns>
+        </member>
+        <member name="T:MewtocolNet.MewtocolInterfaceSerial">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceSerial.PortName">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceSerial.SerialBaudRate">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceSerial.SerialDataBits">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceSerial.SerialParity">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceSerial.SerialStopBits">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceSerial.RtsEnabled">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceSerial.WithPoller">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceSerial.GetConnectionInfo">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceSerial.ConfigureConnection(System.String,System.Int32,System.Int32,System.IO.Ports.Parity,System.IO.Ports.StopBits,System.Boolean,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceSerial.ConnectAsyncPriv(System.Func{System.Threading.Tasks.Task},System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="T:MewtocolNet.MewtocolInterfaceTcp">
+            <summary>
+            The PLC com interface class
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceTcp.IpAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceTcp.Port">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.MewtocolInterfaceTcp.HostEndpoint">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceTcp.ConfigureConnection(System.String,System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceTcp.ConfigureConnection(System.Net.IPAddress,System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceTcp.ConnectAsync(System.Func{System.Threading.Tasks.Task})">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.MewtocolInterfaceTcp.GetConnectionInfo">
+            <summary>
+            Gets the connection info string
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.PLCInfo">
+            <summary>
+            Holds various informations about the PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.TypeCode">
+            <summary>
+            The type of the PLC named by Panasonic
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.TypeName">
+            <summary>
+            The full qualified name of the PLC 
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.ProgramCapacity">
+            <summary>
+            Program capacity in 1K steps
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.CpuVersion">
+            <summary>
+            Version of the cpu
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.OperationMode">
+            <summary>
+            Contains information about the PLCs operation modes as flags
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.OperationModeTags">
+            <summary>
+            A list of operation mode tags, derived from the OPMode flags
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.HardwareInformation">
+            <summary>
+            Hardware information flags about the PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.HardwareInformationTags">
+            <summary>
+            A list of hardware info tags, derived from the HardwareInformation flags
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.SelfDiagnosticError">
+            <summary>
+            Current error code of the PLC
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.IsRunMode">
+            <summary>
+            Quickcheck for the runmode flag
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.Metadata">
+            <summary>
+            Contains useful information about the PLC program and metadata
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PLCInfo.None">
+            <summary>
+            Plc info when its not connected 
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.PlcMetadata">
+            <summary>
+            Contains useful information about the PLC program and metadata
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.LastUserLibChangeDate">
+            <summary>
+            The last date the used user librarys were changed
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.LastPouChangeDate">
+            <summary>
+            The last date the program Pou's were changed
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.LastConfigChangeDate">
+            <summary>
+            The last date the PLC configuration was changed
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.FPWinVersion">
+            <summary>
+            The used FP-Win version to create the PLC program
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.ProjectVersion">
+            <summary>
+            The custom project version of the PLC program
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.MetaDataVersion">
+            <summary>
+            Metadata format version
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.ProjectID">
+            <summary>
+            The project ID of the PLC program
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.ApplicationID">
+            <summary>
+            The application / machine specific ID for the PLC program
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.PlcMetadata.CompanyID">
+            <summary>
+            The company ID of the PLC program creator
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.BitCount">
+            <summary>
+            The size of the bitwise register
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.BitCount.B16">
+            <summary>
+            16 bit
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.BitCount.B32">
+            <summary>
+            32 bit
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.ConnectResult">
+            <summary>
+            The result of an initial connection
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.ConnectResult.Unknown">
+            <summary>
+            There is no known reason for the connection to fail
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.ConnectResult.Connected">
+            <summary>
+            The PLC did establish the connection as expected
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.ConnectResult.Timeout">
+            <summary>
+            The tcp/serial connection to the device timed out (PLC did not respond within time limits)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.ConnectResult.MewtocolError">
+            <summary>
+            The PLC sent a an error message on the type determination stage
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.ConnectResult.MismatchMetadata">
+            <summary>
+            The metadata of the PLC did not match the required metadata for the interface
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.HWInformation">
+            <summary>
+            Contains hardware information about the device as flags
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.HWInformation.UserROM">
+            <summary>
+            Has user ROM
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.HWInformation.ICCard">
+            <summary>
+            Has IC card
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.HWInformation.GeneralPurposeMemory">
+            <summary>
+            Has general purpose memory
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.HWInformation.UltraHighSpeed">
+            <summary>
+            Is CPU ultra high speed type
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.MewtocolVersion.Unknown">
+            <summary>
+            Unable to specify the version
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.MewtocolVersion.Mewtocol">
+            <summary>
+            Uses the standard mewtocol lib
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.MewtocolVersion.Mewtocol7">
+            <summary>
+            Uses the extended mewtocol7 lib
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.OPMode">
+            <summary>
+            Descibes the operation mode of the device as flags
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.None">
+            <summary>
+            No operation mode flag active
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.RunMode">
+            <summary>
+            Is in RUN mode, otherwise its PROG Mode
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.TestMode">
+            <summary>
+            Is in test mode, otherwise ok
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.BreakPointPerOneStep">
+            <summary>
+            Is BRK/1 step executed
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.BreakEnabled">
+            <summary>
+            Is BRK command enabled
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.ExternalOutput">
+            <summary>
+            Is outputting to external device
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.OneStepExecEnabled">
+            <summary>
+            Is 1 step exec enabled
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.MessageInstructionDisplayed">
+            <summary>
+            Is a message displayed?
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.OPMode.RemoteMode">
+            <summary>
+            Is in remote mode
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.PlcType">
+            <summary>
+            Type identifier of the plc
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.Unknown">
+            <summary>
+            Fallback plc type
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP5_16k">
+            <summary>
+            FP5 16k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP5_24k">
+            <summary>
+            FP5 24k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP2_16k">
+            <summary>
+            FP2 16k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP2_32k">
+            <summary>
+            FP2 32k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP3_10k">
+            <summary>
+            FP3 10k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdC_16k">
+            <summary>
+            FP-C 16k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP3_16k">
+            <summary>
+            FP3
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP1_0c9k__C14_C16">
+            <summary>
+            FP1 0.9k C14,C16
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdM_0c9k__C16T">
+            <summary>
+            FP-M 0.9k C16T
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP1_2c7k__C24_C40">
+            <summary>
+            FP1 2.7k C24,C40
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdM_2c7k__C20R_C20T_C32T">
+            <summary>
+            FP-M 2.7k C20R,C20T,C32T
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP1_5k__C56_C72">
+            <summary>
+            FP1 5.0k C56,C72
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdM_5k__C20RC_C20TC_C32TC">
+            <summary>
+            FPM 5.0k C20RC,C20TC,C32TC
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP10S_30k">
+            <summary>
+            FP10S 30k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP10_30k">
+            <summary>
+            FP10 30k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP10_60k">
+            <summary>
+            FP10 60k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP10SH_30k">
+            <summary>
+            FP10SH 30k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP10SH_60k">
+            <summary>
+            FP10SH 60k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP10SH_120k">
+            <summary>
+            FP10SH 120k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0_2c7k__C10_C14_C16">
+            <summary>
+            FP0 2.7k C10,C14,C16
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0_5k__C32_SL1">
+            <summary>
+            FP0 5k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0_10c0k__T32">
+            <summary>
+            FP0 10k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdSIGMA_12k">
+            <summary>
+            FP-SIGMA 12k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdSIGMA_32k">
+            <summary>
+            FP-SIGMA 32k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdSIGMA_16k">
+            <summary>
+            FP-SIGMA 16k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdSIGMA_40k">
+            <summary>
+            FP-SIGMA 40k (never supported)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPde_2c7k">
+            <summary>
+            FP-e 2.7k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0R_16k__C10_C14_C16">
+            <summary>
+            FP0R 16k C10,C14,C16
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0R_32k__C32">
+            <summary>
+            FP0R 32k C32
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0R_32k__T32">
+            <summary>
+            FP0R 32k T32
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0R_32k__F32">
+            <summary>
+            FP0R 32k F32
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP2SH_32k">
+            <summary>
+            FP2SH 32k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP2SH_60k">
+            <summary>
+            FP2SH 60k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP2SH_120k">
+            <summary>
+            FP2SH 120k
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX_16k__C14R">
+            <summary>
+            FP-X 16k C14R
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX_32k__C30R_C60R">
+            <summary>
+            FP-X 32k C30R,C60R
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX0_2c5k__L14_L30">
+            <summary>
+            FP-X0 2.5k L14,L30
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX_16k__L14">
+            <summary>
+            FP-X 16k L14
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX_32k__L30_L60">
+            <summary>
+            FP-X 32k L30,L60
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX0_8k__L40_L60">
+            <summary>
+            FP-X0 8k L40,L60
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX_16k__C14TsP">
+            <summary>
+            FP-X 16k C14T/P
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX_32k__C30TsP_C60TsP_C38AT_C40T">
+            <summary>
+            FP-X 32k C30T/P,C60T/P,C38AT,C40T
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX_2c5k__C40RT0A">
+            <summary>
+            FP-X 2.5k C40RT0A
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdX0_16k__L40_L60">
+            <summary>
+            FP-X0 16k L40,L60
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_16k__C14R">
+            <summary>
+            FP-XH 16k C14R
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__C30R_C40R_C60R">
+            <summary>
+            FP-XH 32k C30R,C40R,C60R
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_16k__C14TsP">
+            <summary>
+            FP-XH 16k C14T/P
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__C30TsP_C40T_C60TsP">
+            <summary>
+            FP-XH 32k C30T/P,C40T,C60T/P
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__C38AT">
+            <summary>
+            FP-XH 32k C38AT
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__M4TsL">
+            <summary>
+            FP-XH 32k M4T/L
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__M8N16TsP">
+            <summary>
+            FP-XH 32k M8N16T/P (RTEX)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__M8N30T">
+            <summary>
+            FP-XH 32k M8N30T (RTEX)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__C40ET_C60ET">
+            <summary>
+            FP-XH 32k C40ET,C60ET
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FPdXH_32k__C60ETF">
+            <summary>
+            FP-XH 32k C60ETF
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0H_32k__C32TsP">
+            <summary>
+            FP0H 32k C32T/P
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP0H_32k__C32ETsEP">
+            <summary>
+            FP0H 32k C32ET/EP
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP7_196k__CPS41E">
+            <summary>
+            FP7 CPS41E (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP7_120k__CPS31E">
+            <summary>
+            FP7 CPS31E (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP7_120k__CPS31">
+            <summary>
+            FP7 CPS31 (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP7_196k__CPS41ES">
+            <summary>
+            FP7 CPS41ES (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP7_120k__CPS31ES">
+            <summary>
+            FP7 CPS31ES (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP7_120k__CPS31S">
+            <summary>
+            FP7 CPS31S (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.FP7_64k__CPS21">
+            <summary>
+            FP7 CPS21 (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PlcType.ECOLOGIX_0k__ELC500">
+            <summary>
+            EcoLogiX (Series code 7)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PollLevelOverwriteMode.Lowest">
+            <summary>
+            The lowest average poll level for overlapping registers gets used
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.PollLevelOverwriteMode.Highest">
+            <summary>
+            The highest average poll level for overlapping registers gets used
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.RegisterPrefix">
+            <summary>
+            The register prefixed type
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterPrefix.X">
+            <summary>
+            Physical input as a bool (Relay)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterPrefix.Y">
+            <summary>
+            Physical output as a bool (Relay)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterPrefix.R">
+            <summary>
+            Internal as a bool (Relay)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterPrefix.DT">
+            <summary>
+            Single word area (Register)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterPrefix.DDT">
+            <summary>
+            Double word area (Register)
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.SingleBitPrefix">
+            <summary>
+            The type of an input/output register
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.SingleBitPrefix.X">
+            <summary>
+            Physical input as a bool (Relay)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.SingleBitPrefix.Y">
+            <summary>
+            Physical output as a bool (Relay)
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.SingleBitPrefix.R">
+            <summary>
+            Internal relay
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.RegisterAttributes.BitRegisterAttribute.#ctor(System.String,System.Byte)">
+            <summary>
+            Builds automatic data transfer between the property below this and 
+            the plc register
+            </summary>
+            <param name="mewAddress">The FP-Address (DT, DDT, R, X, Y..)</param>
+            <param name="plcTypeDef">The type definition from the PLC (STRING[n], ARRAY [0..2] OF ...)</param>
+        </member>
+        <member name="T:MewtocolNet.RegisterAttributes.PollLevelAttribute">
+            <summary>
+            Defines the poll level of the register
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.RegisterAttributes.RegisterAttribute">
+            <summary>
+            Defines the behavior of a register property
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.RegisterAttributes.RegisterAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Builds automatic data transfer between the property below this and 
+            the plc register
+            </summary>
+            <param name="mewAddress">The FP-Address (DT, DDT, R, X, Y..)</param>
+            <param name="plcTypeDef">The type definition from the PLC (STRING[n], ARRAY [0..2] OF ...)</param>
+        </member>
+        <member name="T:MewtocolNet.RegisterAttributes.RegisterCollection">
+            <summary>
+            A register collection base with full auto read and notification support built in
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.RegisterAttributes.RegisterCollection.PLCInterface">
+            <summary>
+            Reference to its bound interface
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.RegisterAttributes.RegisterCollection.PropertyChanged">
+            <summary>
+            Whenever one of its props changes
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.RegisterAttributes.RegisterCollection.TriggerPropertyChanged(System.String)">
+            <summary>
+            Triggers a property changed event
+            </summary>
+            <param name="propertyName">Name of the property to trigger for</param>
+        </member>
+        <member name="M:MewtocolNet.RegisterAttributes.RegisterCollection.AutoSetter``1(System.Object,``0@,System.String)">
+            <summary>
+            Use this on the setter method of a property to enable automatic property register writing
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.RegisterAttributes.RegisterCollection.OnInterfaceLinked(MewtocolNet.MewtocolInterface)">
+            <summary>
+            Gets called when the register collection base was linked to its parent mewtocol interface
+            </summary>
+            <param name="plc">The parent interface</param>
+        </member>
+        <member name="M:MewtocolNet.RegisterAttributes.RegisterCollection.OnInterfaceLinkedAndOnline(MewtocolNet.MewtocolInterface)">
+            <summary>
+            Gets called when the register collection base was linked to its parent mewtocol interface
+            and the plc connection is established
+            </summary>
+            <param name="plc">The parent interface</param>
+        </member>
+        <member name="T:MewtocolNet.RegisterAttributes.StringHintAttribute">
+            <summary>
+            Defines a string size hint
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.RegisterBuilding.BuilderPatterns.RBuild">
+            <summary>
+            Contains useful tools for bunch register creation
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.RegisterBuilding.BuilderPatterns.RBuildAnon">
+            <summary>
+            An anonymous register build interface
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterBuilding.ParseResultState.FailedSoft">
+            <summary>
+            The parse try failed at the intial regex match
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterBuilding.ParseResultState.FailedHard">
+            <summary>
+            The parse try failed at the afer- regex match
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.RegisterBuilding.ParseResultState.Success">
+            <summary>
+            The parse try did work
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.RegisterBuilding.StepBaseTyper.AsType``1(MewtocolNet.RegisterBuilding.StepBase)">
+            <summary>
+            Sets the register as a dotnet <see cref="N:System" /> type for direct conversion
+            </summary>
+            <typeparam name="T">
+            <list type="bullet">
+			<item>
+				<term>
+					<see cref="T:System.Boolean" />
+				</term>
+				<description>Boolean R/X/Y registers</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int16" />
+				</term>
+				<description>16 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt16" />
+				</term>
+				<description>16 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.Word" />
+				</term>
+				<description>16 bit word (2 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int32" />
+				</term>
+				<description>32 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt32" />
+				</term>
+				<description>32 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.DWord" />
+				</term>
+				<description>32 bit word (4 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Single" />
+				</term>
+				<description>32 bit floating point</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.TimeSpan" />
+				</term>
+				<description>
+					32 bit time from <see cref="F:MewtocolNet.PlcVarType.TIME" /> interpreted as <see cref="T:System.TimeSpan" />
+				</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Enum" />
+				</term>
+				<description>16 or 32 bit enums, also supports flags</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.String" />
+				</term>
+				<description>String of chars, the interface will automatically get the length</description>
+			</item>
+		</list>
+            </typeparam>
+        </member>
+        <member name="M:MewtocolNet.RegisterBuilding.StepBaseTyper.AsType(MewtocolNet.RegisterBuilding.StepBase,System.Type)">
+            <summary>
+            Sets the register as a dotnet <see cref="N:System" /> type for direct conversion
+            <list type="bullet">
+			<item>
+				<term>
+					<see cref="T:System.Boolean" />
+				</term>
+				<description>Boolean R/X/Y registers</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int16" />
+				</term>
+				<description>16 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt16" />
+				</term>
+				<description>16 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.Word" />
+				</term>
+				<description>16 bit word (2 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int32" />
+				</term>
+				<description>32 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt32" />
+				</term>
+				<description>32 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.DWord" />
+				</term>
+				<description>32 bit word (4 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Single" />
+				</term>
+				<description>32 bit floating point</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.TimeSpan" />
+				</term>
+				<description>
+					32 bit time from <see cref="F:MewtocolNet.PlcVarType.TIME" /> interpreted as <see cref="T:System.TimeSpan" />
+				</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Enum" />
+				</term>
+				<description>16 or 32 bit enums, also supports flags</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.String" />
+				</term>
+				<description>String of chars, the interface will automatically get the length</description>
+			</item>
+		</list>
+            </summary>
+            <param name="type">
+            <list type="bullet">
+			<item>
+				<term>
+					<see cref="T:System.Boolean" />
+				</term>
+				<description>Boolean R/X/Y registers</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int16" />
+				</term>
+				<description>16 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt16" />
+				</term>
+				<description>16 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.Word" />
+				</term>
+				<description>16 bit word (2 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int32" />
+				</term>
+				<description>32 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt32" />
+				</term>
+				<description>32 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.DWord" />
+				</term>
+				<description>32 bit word (4 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Single" />
+				</term>
+				<description>32 bit floating point</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.TimeSpan" />
+				</term>
+				<description>
+					32 bit time from <see cref="F:MewtocolNet.PlcVarType.TIME" /> interpreted as <see cref="T:System.TimeSpan" />
+				</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Enum" />
+				</term>
+				<description>16 or 32 bit enums, also supports flags</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.String" />
+				</term>
+				<description>String of chars, the interface will automatically get the length</description>
+			</item>
+		</list>
+            </param>
+        </member>
+        <member name="M:MewtocolNet.RegisterBuilding.StepBaseTyper.AsType(MewtocolNet.RegisterBuilding.StepBase,MewtocolNet.PlcVarType)">
+            <summary>
+            Sets the register type as a predefined <see cref="T:MewtocolNet.PlcVarType"/>
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.RegisterBuilding.StepBaseTyper.AsType(MewtocolNet.RegisterBuilding.StepBase,System.String)">
+            <summary>
+            Sets the register type from the plc type string <br/>
+            <c>Supported types:</c>
+            <list type="bullet">
+            <item><term>BOOL</term><description>Boolean R/X/Y registers</description></item>
+            <item><term>INT</term><description>16 bit signed integer</description></item>
+            <item><term>UINT</term><description>16 bit un-signed integer</description></item>
+            <item><term>DINT</term><description>32 bit signed integer</description></item>
+            <item><term>UDINT</term><description>32 bit un-signed integer</description></item>
+            <item><term>REAL</term><description>32 bit floating point</description></item>
+            <item><term>TIME</term><description>32 bit time interpreted as <see cref="T:System.TimeSpan"/></description></item>
+            <item><term>STRING</term><description>String of chars, the interface will automatically get the length</description></item>
+            <item><term>STRING[N]</term><description>String of chars, pre capped to N</description></item>
+            <item><term>WORD</term><description>16 bit word interpreted as <see cref="T:System.UInt16"/></description></item>
+            <item><term>DWORD</term><description>32 bit double word interpreted as <see cref="T:System.UInt32"/></description></item>
+            </list>
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.RegisterBuilding.StepBaseTyper.AsTypeArray``1(MewtocolNet.RegisterBuilding.StepBase,System.Int32[])">
+            <summary>
+            Sets the register as a (multidimensional) array targeting a PLC array
+            </summary>
+            <typeparam name="T">
+            <list type="bullet">
+			<item>
+				<term>
+					<see cref="T:System.Boolean" />
+				</term>
+				<description>Boolean R/X/Y registers</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int16" />
+				</term>
+				<description>16 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt16" />
+				</term>
+				<description>16 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.Word" />
+				</term>
+				<description>16 bit word (2 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Int32" />
+				</term>
+				<description>32 bit signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.UInt32" />
+				</term>
+				<description>32 bit un-signed integer</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:MewtocolNet.DWord" />
+				</term>
+				<description>32 bit word (4 bytes)</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Single" />
+				</term>
+				<description>32 bit floating point</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.TimeSpan" />
+				</term>
+				<description>
+					32 bit time from <see cref="F:MewtocolNet.PlcVarType.TIME" /> interpreted as <see cref="T:System.TimeSpan" />
+				</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.Enum" />
+				</term>
+				<description>16 or 32 bit enums, also supports flags</description>
+			</item>
+			<item>
+				<term>
+					<see cref="T:System.String" />
+				</term>
+				<description>String of chars, the interface will automatically get the length</description>
+			</item>
+		</list>
+            </typeparam>
+            <param name="indicies">
+            Indicies for multi dimensional arrays, for normal arrays just one INT
+            </param>
+            <example>
+            <b>One dimensional arrays:</b><br />
+            ARRAY [0..2] OF INT = <c>AsTypeArray&lt;short[]&gt;(3)</c><br />
+            ARRAY [5..6] OF DWORD = <c>AsTypeArray&lt;DWord[]&gt;(2)</c><br />
+            <br />
+            <b>Multi dimensional arrays:</b><br />
+            ARRAY [0..2, 0..3, 0..4] OF INT = <c>AsTypeArray&lt;short[,,]&gt;(3,4,5)</c><br />
+            ARRAY [5..6, 0..2] OF DWORD = <c>AsTypeArray&lt;DWord[,]&gt;(2, 3)</c><br />
+            </example>
+        </member>
+        <member name="T:MewtocolNet.Registers.IRegister">
+            <summary>
+            An interface for all register types
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.Registers.IRegister.ValueChanged">
+            <summary>
+            Gets called whenever the value was changed
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.IsAutoGenerated">
+            <summary>
+            Defines if the register was auto generated from a property.<br/>
+            If so it is not allowed to remove the register from the interface stack
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.MemoryArea">
+            <summary>
+            The readonly memory area of the register
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.RegisterType">
+            <summary>
+            Type of the underlying register
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.Name">
+            <summary>
+            The name of the register
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.BoundPropertyNamesString">
+            <summary>
+            Names of the bound properties, comma seperated
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.PollLevel">
+            <summary>
+            The poll level this register is attached to
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.MemoryAreaInfo">
+            <summary>
+            Info string about the memory area
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.UpdateFreqHz">
+            <summary>
+            The update frequency of the register in Hz
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.PLCAddressName">
+            <summary>
+            Gets the register address name as in the plc
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.ValueObj">
+            <summary>
+            The current value of the register
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.ValueStr">
+            <summary>
+            The current value of the register as a string
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.UnderlyingSystemType">
+            <summary>
+            The system (.NET) type of the underlying value thats held inside the register
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister.MemoryAddress">
+            <summary>
+            The plc memory address of the register
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.IRegister.GetAsPLC">
+            <summary>
+            Gets the value of the register as the plc representation string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MewtocolNet.Registers.IRegister.ToString">
+            <summary>
+            Builds a readable string with all important register informations
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.IRegister.ToString(System.Boolean)">
+            <summary>
+            Builds a readable string with all important register informations and additional infos
+            </summary>
+        </member>
+        <member name="E:MewtocolNet.Registers.Register.ValueChanged">
+            <summary>
+            Gets called whenever the value was changed
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.IsAutoGenerated">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.AttachedInterface">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.UnderlyingSystemType">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.ValueObj">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.ValueStr">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.RegisterType">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.MemoryArea">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.BoundPropertyNamesString">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.PLCAddressName">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.MemoryAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.PollLevel">
+            <inheritdoc/>
+        </member>
+        <member name="P:MewtocolNet.Registers.Register.UpdateFreqHz">
+            <inheritdoc/>
+        </member>
+        <member name="T:MewtocolNet.Registers.ArrayRegister`1">
+            <summary>
+            Defines a register containing a string
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.ArrayRegister`1.AddressLength">
+            <summary>
+            The rgisters memory length
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.ArrayRegister`1.WriteAsync(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.ArrayRegister`1.ReadAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.ArrayRegister`1.UpdateHoldingValue(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.ArrayRegister`1.GetRegisterString">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.ArrayRegister`1.GetRegisterAddressLen">
+            <inheritdoc/>
+        </member>
+        <member name="T:MewtocolNet.Registers.BoolRegister">
+            <summary>
+            Defines a register containing a boolean
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.BoolRegister.SpecialAddress">
+            <summary>
+            The registers memory adress if not a special register
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.BoolRegister.GetSpecialAddress">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.BoolRegister.GetMewName">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.BoolRegister.GetRegisterAddressLen">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.BoolRegister.WriteAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.BoolRegister.ReadAsync">
+            <inheritdoc/>
+        </member>
+        <member name="T:MewtocolNet.Registers.StringRegister">
+            <summary>
+            Defines a register containing a number
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.StringRegister.AddressLength">
+            <summary>
+            The rgisters memory length
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.StringRegister.GetAsPLC">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StringRegister.GetValueString">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StringRegister.GetRegisterAddressLen">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StringRegister.WriteAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StringRegister.ReadAsync">
+            <inheritdoc/>
+        </member>
+        <member name="T:MewtocolNet.Registers.StructRegister`1">
+            <summary>
+            Defines a register containing a number
+            </summary>
+            <typeparam name="T">The type of the numeric value</typeparam>
+        </member>
+        <member name="P:MewtocolNet.Registers.StructRegister`1.AddressLength">
+            <summary>
+            The rgisters memory length
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.StructRegister`1.SpecialAddress">
+            <summary>
+            The registers memory adress if not a special register
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.StructRegister`1.GetAsPLC">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StructRegister`1.GetValueString">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StructRegister`1.GetRegisterAddressLen">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StructRegister`1.WriteAsync(`0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MewtocolNet.Registers.StructRegister`1.ReadAsync">
+            <inheritdoc/>
+        </member>
+        <member name="T:MewtocolNet.Registers.IArrayRegister`1">
+            <summary>
+            Provides an abstruct enumerable interface for one dimensional array registers
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.IArrayRegister`1.ReadAsync">
+            <summary>
+            Reads the register value async from the plc
+            </summary>
+            <returns>The register value</returns>
+        </member>
+        <member name="M:MewtocolNet.Registers.IArrayRegister`1.WriteAsync(`0[])">
+            <summary>
+            Writes a whole array to the plc
+            </summary>
+            <returns>True if successfully set</returns>
+        </member>
+        <member name="P:MewtocolNet.Registers.IArrayRegister`1.Item(System.Int32)">
+            <summary>
+            The current value of the register at the position
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.Registers.IArrayRegister2D`1">
+            <summary>
+            Provides an abstruct enumerable interface for two dimensional array registers
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.IArrayRegister2D`1.ReadAsync">
+            <summary>
+            Reads the register value async from the plc
+            </summary>
+            <returns>The register value</returns>
+        </member>
+        <member name="M:MewtocolNet.Registers.IArrayRegister2D`1.WriteAsync(`0[0:,0:])">
+            <summary>
+            Writes a whole array to the plc
+            </summary>
+            <returns>True if successfully set</returns>
+        </member>
+        <member name="P:MewtocolNet.Registers.IArrayRegister2D`1.Item(System.Int32,System.Int32)">
+            <summary>
+            The current value of the register at the position
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.Registers.IArrayRegister3D`1">
+            <summary>
+            Provides an abstruct enumerable interface for three dimensional array registers
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.IArrayRegister3D`1.ReadAsync">
+            <summary>
+            Reads the register value async from the plc
+            </summary>
+            <returns>The register value</returns>
+        </member>
+        <member name="M:MewtocolNet.Registers.IArrayRegister3D`1.WriteAsync(`0[0:,0:,0:])">
+            <summary>
+            Writes a whole array to the plc
+            </summary>
+            <returns>True if successfully set</returns>
+        </member>
+        <member name="P:MewtocolNet.Registers.IArrayRegister3D`1.Item(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            The current value of the register at the position
+            </summary>
+        </member>
+        <member name="T:MewtocolNet.Registers.IRegister`1">
+            <summary>
+            An interface for all struct register types
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.Registers.IRegister`1.Value">
+            <summary>
+            The current value of the register
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.IRegister`1.ReadAsync">
+            <summary>
+            Reads the register value async from the plc
+            </summary>
+            <returns>The register value</returns>
+        </member>
+        <member name="M:MewtocolNet.Registers.IRegister`1.WriteAsync(`0)">
+            <summary>
+            Writes the register content async to the plc
+            </summary>
+            <returns>True if successfully set</returns>
+        </member>
+        <member name="P:MewtocolNet.Registers.IStringRegister.Value">
+            <summary>
+            The current value of the register
+            </summary>
+        </member>
+        <member name="M:MewtocolNet.Registers.IStringRegister.ReadAsync">
+            <summary>
+            Reads the register value async from the plc
+            </summary>
+            <returns>The register value</returns>
+        </member>
+        <member name="M:MewtocolNet.Registers.IStringRegister.WriteAsync(System.String)">
+            <summary>
+            Writes the register content async to the plc
+            </summary>
+            <returns>True if successfully set</returns>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.MaxOptimizationDistance">
+            <summary>
+            <code>
+            This feature can improve read write times by a big margin but also
+            block outgoing messages inbetween polling cycles more frequently
+            </code>
+            The max distance of the gap between registers (if there is a gap between 
+            adjacent registers) to merge them into one request <br/>
+            Example: <br/>
+            <example>
+            We have a register at DT100 (1 word long) and a
+            register at DT101 (1 word long) <br/>
+            - If the max distance is 0 it will not merge them into one request<br/>
+            - If the max distance is 1 it will merge them into one request<br/>
+            - If the max distance is 2 and the next register is at DT102 it will also merge them and ignore the spacer byte in the response<br/>
+            </example>
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.PollLevelOverwriteMode">
+            <summary>
+            The overwrite mode for poll levels <br/>
+            When set to <see cref="F:MewtocolNet.PollLevelOverwriteMode.Lowest"/> the lowest average poll level for overlapping registers gets used <br/>
+            When set to <see cref="F:MewtocolNet.PollLevelOverwriteMode.Highest"/> the highest average poll level for overlapping registers gets used
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.MaxDataBlocksPerWrite">
+            <summary>
+            Defines how many WORD blocks the interface will send on a DT area write request before splitting up messages <br/>
+            Higher numbers will result in a longer send and receive thread blocking time
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.SendReceiveTimeoutMs">
+            <summary>
+            The send and receive timout for messages in milliseconds
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.HeartbeatIntervalMs">
+            <summary>
+            The heartbeat interval in milliseconds, it is recommended to use 3000ms
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.TryReconnectAttempts">
+            <summary>
+            Number of attempts to try and reconnect to the plc, 0 for none
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.TryReconnectDelayMs">
+            <summary>
+            The delay between reconnect trys
+            </summary>
+        </member>
+        <member name="P:MewtocolNet.SetupClasses.InterfaceSettings.AlwaysGetMetadata">
+            <summary>
+            Sets wether or not the interface should always retrieve metadata on connection start
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.TypeConversion.Conversions.items">
+            <summary>
+            All conversions for reading data from and to the plc, excluding Enum types
+            </summary>
+        </member>
+        <member name="F:MewtocolNet.UnderlyingRegisters.AreaBase.managedRegisters">
+            <summary>
+            List of register link groups that are managed in this memory area
+            </summary>
+        </member>
+    </members>
+</doc>

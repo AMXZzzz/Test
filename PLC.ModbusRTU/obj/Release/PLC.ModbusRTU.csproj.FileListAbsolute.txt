@@ -1,0 +1,12 @@
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.csproj.AssemblyReference.cache
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.csproj.CoreCompileInputs.cache
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\ModbusTCP\bin\Release\Plugins\PLC.ModbusRTU.dll
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\ModbusTCP\bin\Release\Plugins\PLC.ModbusRTU.pdb
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.dll
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.pdb
+D:\桌面\ModbusTCP\ModbusTCP\bin\Release\Plugins\PLC.ModbusRTU.dll
+D:\桌面\ModbusTCP\ModbusTCP\bin\Release\Plugins\PLC.ModbusRTU.pdb
+D:\桌面\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.csproj.AssemblyReference.cache
+D:\桌面\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.csproj.CoreCompileInputs.cache
+D:\桌面\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.dll
+D:\桌面\ModbusTCP\PLC.ModbusRTU\obj\Release\PLC.ModbusRTU.pdb

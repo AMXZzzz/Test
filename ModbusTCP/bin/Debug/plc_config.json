@@ -1,0 +1,80 @@
+[
+  {
+    "Link": {
+      "PlcName": "新PLC",
+      "Ip": "192.168.0.7",
+      "Port": 23,
+      "Protocol": "Mewtocol",
+      "Client": null
+    },
+    "Track": {
+      "OneReady": {
+        "Address": null,
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "OneWidthAddr": {
+        "Address": "0",
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "OneTriggerAddr": {
+        "Address": "0",
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "OneHasStatus": false,
+      "OneStatusAddr": {
+        "Address": "0",
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "OneStatusDoneValue": 1,
+      "TwoReady": {
+        "Address": null,
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "TwoWidthAddr": {
+        "Address": "0",
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "TwoTriggerAddr": {
+        "Address": "0",
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "TwoHasStatus": false,
+      "TwoStatusAddr": {
+        "Address": "0",
+        "DataType": 2,
+        "CurrentValue": 0,
+        "TargetValue": 0,
+        "Description": ""
+      },
+      "TwoStatusDoneValue": 1,
+      "TrackCount": 1
+    },
+    "RegisterSheet": [],
+    "ExtraParams": {
+      "StationNo": "1"
+    },
+    "LastError": "",
+    "LastErrorTime": "0001-01-01T00:00:00"
+  }
+]

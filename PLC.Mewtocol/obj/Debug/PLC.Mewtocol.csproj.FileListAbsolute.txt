@@ -1,0 +1,12 @@
+D:\桌面\ModbusTCP\PLC.Mewtocol\bin\Debug\PLC.Mewtocol.dll
+D:\桌面\ModbusTCP\PLC.Mewtocol\bin\Debug\PLC.Mewtocol.pdb
+D:\桌面\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.csproj.AssemblyReference.cache
+D:\桌面\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.csproj.CoreCompileInputs.cache
+D:\桌面\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.dll
+D:\桌面\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.pdb
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\bin\Debug\Plugins\PLC.Mewtocol.dll
+C:\Users\E.T\Desktop\ModbusTCP\ModbusTCP\bin\Debug\Plugins\PLC.Mewtocol.pdb
+C:\Users\E.T\Desktop\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.csproj.AssemblyReference.cache
+C:\Users\E.T\Desktop\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.csproj.CoreCompileInputs.cache
+C:\Users\E.T\Desktop\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.dll
+C:\Users\E.T\Desktop\ModbusTCP\PLC.Mewtocol\obj\Debug\PLC.Mewtocol.pdb

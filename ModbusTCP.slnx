@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ModbusTCP/ModbusTCP.csproj" Id="69bb1e15-a52c-4991-bf1e-9cd581ee1f74" />
+  <Project Path="PLC.Common/PLC.Common.csproj" Id="fd83ac88-d00f-413b-9f8e-22f41223ae79" />
+  <Project Path="PLC.Mewtocol/PLC.Mewtocol.csproj" Id="8ed55891-9bda-410c-81f9-df0581f03191" />
+  <Project Path="PLC.ModbusRTU/PLC.ModbusRTU.csproj" Id="dec94920-5142-4f8e-9c69-123e671e8c68" />
+  <Project Path="PLC.SiemensS7/PLC.SiemensS7.csproj" Id="d815a72b-ff29-41fa-a3a2-d183b0fe8e2d" />
+</Solution>
