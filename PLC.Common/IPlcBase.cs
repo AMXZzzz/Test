@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PLC.IBase {
@@ -47,6 +48,18 @@ namespace PLC.IBase {
                 TargetValue = this.TargetValue,
                 Description = this.Description
             };
+        }
+    }
+
+    /// <summary>
+    /// 标注一个 PLC 协议插件。扫描时直接读特性拿协议名,无需实例化。
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    public class ProtocolAttribute : Attribute {
+        public string Name { get; }
+
+        public ProtocolAttribute (string name) {
+            Name = name;
         }
     }
 

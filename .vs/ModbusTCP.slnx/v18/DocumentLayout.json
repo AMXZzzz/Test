@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\view\\addplcdialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\view\\addplcdialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.comms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.comms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\common\\pluginloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\common\\pluginloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\plc.modbustcp\\modbustcplib.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\plc.modbustcp\\modbustcplib.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\services\\iplcservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\services\\iplcservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,17 +30,73 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PluginLoader.cs",
+              "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Common\\PluginLoader.cs",
+              "RelativeDocumentMoniker": "ModbusTCP\\Common\\PluginLoader.cs",
+              "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Common\\PluginLoader.cs",
+              "RelativeToolTip": "ModbusTCP\\Common\\PluginLoader.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwGUAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-27T17:40:51.216Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ModbusTcpLib.cs",
+              "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\PLC.ModbusTcp\\ModbusTcpLib.cs",
+              "RelativeDocumentMoniker": "ModbusTCP\\PLC.ModbusTcp\\ModbusTcpLib.cs",
+              "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\PLC.ModbusTcp\\ModbusTcpLib.cs",
+              "RelativeToolTip": "ModbusTCP\\PLC.ModbusTcp\\ModbusTcpLib.cs",
+              "ViewState": "AgIAAMUBAAAAAAAAAAAgwOMBAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-27T17:37:12.797Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AddPlcDialog.cs",
+              "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\View\\AddPlcDialog.cs",
+              "RelativeDocumentMoniker": "ModbusTCP\\View\\AddPlcDialog.cs",
+              "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\View\\AddPlcDialog.cs",
+              "RelativeToolTip": "ModbusTCP\\View\\AddPlcDialog.cs",
+              "ViewState": "AgIAADgBAAAAAAAAAAAgwE0BAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-27T17:34:41.379Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IPlcService.cs",
+              "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Services\\IPlcService.cs",
+              "RelativeDocumentMoniker": "ModbusTCP\\Services\\IPlcService.cs",
+              "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Services\\IPlcService.cs",
+              "RelativeToolTip": "ModbusTCP\\Services\\IPlcService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-27T17:13:10.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Form1.Comms.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.Comms.cs",
               "RelativeDocumentMoniker": "ModbusTCP\\Form1.Comms.cs",
               "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.Comms.cs",
               "RelativeToolTip": "ModbusTCP\\Form1.Comms.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAAwCQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABQBAAAAAAAAAAAcwBwBAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-27T16:47:01.064Z",
               "EditorCaption": ""

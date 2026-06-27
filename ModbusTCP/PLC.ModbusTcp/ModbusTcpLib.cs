@@ -26,7 +26,7 @@ namespace PLC {
         /// <param name="localIP">本地网卡IP地址（可选）</param>
         /// <returns></returns>
         /// <exception cref="TimeoutException"></exception>
-        public async Task ConnectAsync (string ip, int port, int timeoutMs = 8000, string localIP = null) {
+        public async Task<bool> ConnectAsync (string ip, int port, int timeoutMs = 8000, string localIP = null) {
             //! 如果已经链接，则先断开
             Disconnect();
 
@@ -59,6 +59,7 @@ namespace PLC {
             _stream.ReadTimeout = timeoutMs;
             _stream.WriteTimeout = timeoutMs;
             _isConnected = true;
+            return true;
         }
 
         /// <summary>
