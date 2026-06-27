@@ -4,4 +4,5 @@
   <Project Path="PLC.Mewtocol/PLC.Mewtocol.csproj" Id="8ed55891-9bda-410c-81f9-df0581f03191" />
   <Project Path="PLC.ModbusRTU/PLC.ModbusRTU.csproj" Id="dec94920-5142-4f8e-9c69-123e671e8c68" />
   <Project Path="PLC.SiemensS7/PLC.SiemensS7.csproj" Id="d815a72b-ff29-41fa-a3a2-d183b0fe8e2d" />
+  <Project Path="Presenters/Presenters.csproj" Id="6d323b50-0955-4b7b-9877-51617d096f14" />
 </Solution>

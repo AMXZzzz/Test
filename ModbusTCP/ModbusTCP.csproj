@@ -114,7 +114,6 @@
     <Compile Include="Form1.PointsGrid.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Services\IPlcService.cs" />
     <Compile Include="View\AddPlcDialog.cs" />
     <Compile Include="View\AddPointDialog.cs" />
     <Compile Include="Form1.cs">
@@ -175,7 +174,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Presenter\" />
+    <Folder Include="View\Presenter\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.9.3\build\Fody.targets" Condition="Exists('..\packages\Fody.6.9.3\build\Fody.targets')" />
