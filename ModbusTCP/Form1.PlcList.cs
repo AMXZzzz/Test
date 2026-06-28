@@ -128,7 +128,7 @@ namespace PLC {
             btnMovePLCDown.Click += (s, e) => MoveDownRequested?.Invoke(this, e);
             btnApplyIp.Click += (s, e) => ApplyIpRequested?.Invoke(this, e);
             btnApplyPort.Click += (s, e) => ApplyPortRequested?.Invoke(this, e);
-
+                
             dgvPLCList.SelectionChanged += OnPlcSelectionChanged;
             cmbProtocol.SelectedIndexChanged += OnProtocolChanged;
         }

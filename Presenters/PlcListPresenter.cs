@@ -60,6 +60,10 @@ namespace PLC.Presenters {
             config.Link.Client = null;
             _store.RemoveAt(idx);   // 这会触发 Changed → 视图自动刷新
 
+            // 删除后重新定位选中行
+            if (_store.Count > 0)
+                _view.SelectPlc(Math.Min(idx, _store.Count - 1));
+
             _view.Log($"🗑️ 已删除 PLC: {config.Link.PlcName}");
         }
 
@@ -71,8 +75,6 @@ namespace PLC.Presenters {
         private void OnMoveUp (object sender, EventArgs e) => Move(-1);
         private void OnMoveDown (object sender, EventArgs e) => Move(1);
 
-
-       
         /// <summary>
         /// 应用设置IP
         /// </summary>
@@ -86,7 +88,7 @@ namespace PLC.Presenters {
 
             //! IP校验
             string newIp = _view.IpText.Trim();
-            if (!System.Net.IPAddress.TryParse(newIp, out _)) {
+            if (!IsValidIp(newIp)) {
                 _view.Log($"IP格式无效: {newIp}"); return;
             }
 
@@ -96,7 +98,7 @@ namespace PLC.Presenters {
             }
             //! 应用修改
             config.Link.Ip = newIp;
-            _view.ShowPlcList(_store.Plcs);         //! 刷新列表显示
+            _store.NotifyChanged();             //! 属性数据, 会自动触发UI刷新
             _view.Log($"✅ [{config.Link.PlcName}] IP已更新为 {newIp}");
         }
 
@@ -123,7 +125,7 @@ namespace PLC.Presenters {
 
             //! 应用修改
             config.Link.Port = port;
-            _view.ShowPlcList(_store.Plcs);     //! 刷新列表显示
+            _store.NotifyChanged();             //! 属性数据, 会自动触发UI刷新
             _view.Log($"✅ [{config.Link.PlcName}] 端口已更新为 {port}");
         }
 
@@ -148,7 +150,7 @@ namespace PLC.Presenters {
 
             //! 应用修改
             config.Link.Protocol = newProto;
-            _view.ShowPlcList(_store.Plcs);
+            _store.NotifyChanged();             //! 属性数据, 会自动触发UI刷新
             _view.Log($"✅ [{config.Link.PlcName}] 协议已更新为 {newProto}");
         }
 
@@ -187,5 +189,11 @@ namespace PLC.Presenters {
             _store.Swap(idx, newIdx);   // 触发 Changed → 刷新
             _view.SelectPlc(newIdx); // 让选中跟着移动
         }
+
+        /// <summary>
+        /// 校验 IP 字符串是否合法
+        /// </summary>
+        private static bool IsValidIp (string ip)
+            => System.Net.IPAddress.TryParse(ip, out _);
     }
 }

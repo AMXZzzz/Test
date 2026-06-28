@@ -30,6 +30,11 @@ namespace PLC.Models {
         }
 
         /// <summary>
+        /// 手动通知数据已变更(用于直接修改了某个 config 字段后,主动触发刷新)。
+        /// </summary>
+        public void NotifyChanged () => OnChanged();
+
+        /// <summary>
         /// 获取指定索引的 PLC 配置
         /// </summary>
         /// <param name="index"></param>
