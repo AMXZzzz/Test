@@ -163,6 +163,10 @@
       <Project>{fd83ac88-d00f-413b-9f8e-22f41223ae79}</Project>
       <Name>PLC.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Presenters\Presenters.csproj">
+      <Project>{6d323b50-0955-4b7b-9877-51617d096f14}</Project>
+      <Name>Presenters</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">
