@@ -10,25 +10,25 @@ namespace PLC {
         // ============ 属性:把控件状态读出来给 Presenter ============
 
         //! 选择的 PLC 索引, 来自 ListBox.SelectedIndex
-        public int SelectedPlcIndex => dgvPLCList.CurrentRow?.Index ?? -1;
+        public int ISelectedPlcIndex => dgvPLCList.CurrentRow?.Index ?? -1;
 
         //!  当前 PLC 的 IP, 来自 TextBox.Text
-        public string IpText => txtIp.Text;
+        public string IIpText => txtIp.Text;
 
         //! 当前 PLC 的端口, 来自 TextBox.Text
-        public string PortText => txtPort.Text;
+        public string IPortText => txtPort.Text;
 
         //! 当前 PLC 的协议, 来自 ComboBox.SelectedItem
-        public string SelectedProtocol => cmbProtocol.SelectedItem?.ToString() ?? "";
+        public string ISelectedProtocol => cmbProtocol.SelectedItem?.ToString() ?? "";
 
-        // ============ 方法:Presenter 让界面显示什么 ============
+        // ============ 接口方法 ============
         /// <summary>
         /// 显示PLC列表
         /// </summary>
         /// <param name="plcs"></param>
-        public void ShowPlcList (IReadOnlyList<TcpPlcConfig> plcs) {
+        public void IShowPlcList (IReadOnlyList<TcpPlcConfig> plcs) {
             // 刷新时摘掉选择事件,防止误触发
-            dgvPLCList.SelectionChanged -= OnPlcSelectionChanged;
+            dgvPLCList.SelectionChanged -= (s, e) => PlcSelectionChanged?.Invoke(this, e);
 
             //! 刷新
             dgvPLCList.Rows.Clear();
@@ -37,7 +37,7 @@ namespace PLC {
                 dgvPLCList.Rows.Add(p.Link.PlcName, p.Link.Ip, p.Link.Port, p.Link.Protocol, status);
             }
             //! 重新绑定事件
-            dgvPLCList.SelectionChanged += OnPlcSelectionChanged;
+            dgvPLCList.SelectionChanged += (s, e) => PlcSelectionChanged?.Invoke(this, e);
         }
 
 
@@ -47,37 +47,36 @@ namespace PLC {
         /// <param name="ip"></param>
         /// <param name="port"></param>
         /// <param name="protocol"></param>
-        public void ShowPlcDetail (string ip, string port, string protocol) {
+        public void IShowPlcDetail (string ip, string port, string protocol) {
             //! 回填到UI编辑区
             txtIp.Text = ip;
             txtPort.Text = port;
 
             // 改协议下拉时别触发协议变更事件
-            cmbProtocol.SelectedIndexChanged -= OnProtocolChanged;
+            cmbProtocol.SelectedIndexChanged -= (s, e) => ProtocolChangeRequested?.Invoke(this, e);
             //! 回填协议
             int i = cmbProtocol.Items.IndexOf(protocol);
             cmbProtocol.SelectedIndex = i >= 0 ? i : 0;
             //! 重新绑定事件
-            cmbProtocol.SelectedIndexChanged += OnProtocolChanged;
+            cmbProtocol.SelectedIndexChanged += (s, e) => ProtocolChangeRequested?.Invoke(this, e);
         }
 
         /// <summary>
         /// 显示刷新协议列表
         /// </summary>
         /// <param name="protocols"></param>
-        public void ShowProtocolList (IReadOnlyList<string> protocols) {
+        public void IShowProtocolList (IReadOnlyList<string> protocols) {
             //! 刷新协议下拉列表
             cmbProtocol.Items.Clear();
             foreach (var p in protocols)
                 cmbProtocol.Items.Add(p);
         }
 
-
         /// <summary>
         /// 选择PLC
         /// </summary>
         /// <param name="index"></param>
-        public void SelectPlc (int index) {
+        public void ISelectPlc (int index) {
             //! 索引校验
             if (index < 0 || index >= dgvPLCList.Rows.Count) return;
             //! 选中指定行
@@ -91,14 +90,14 @@ namespace PLC {
         /// <param name="message"></param>
         /// <param name="caption"></param>
         /// <returns></returns>
-        public bool Confirm (string message, string caption)
+        public bool IConfirm (string message, string caption)
             => MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK;
 
         /// <summary>
         /// 显示日志信息
         /// </summary>
         /// <param name="message"></param>
-        public void Log (string message) => LogHelper.Log(message);
+        public void ILog (string message) => LogHelper.Log(message);
 
         // ============ 事件:接口要求的事件 + 控件转发 ============
 
@@ -129,24 +128,12 @@ namespace PLC {
             btnApplyIp.Click += (s, e) => ApplyIpRequested?.Invoke(this, e);
             btnApplyPort.Click += (s, e) => ApplyPortRequested?.Invoke(this, e);
                 
-            dgvPLCList.SelectionChanged += OnPlcSelectionChanged;
-            cmbProtocol.SelectedIndexChanged += OnProtocolChanged;
+            dgvPLCList.SelectionChanged += (s, e) => PlcSelectionChanged?.Invoke(this, e);
+            cmbProtocol.SelectedIndexChanged += (s, e) => ProtocolChangeRequested?.Invoke(this, e);
+
+
         }
 
-        /// <summary>
-        /// PLC 列表选择变更事件
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="e"></param>
-        private void OnPlcSelectionChanged (object s, EventArgs e)
-            => PlcSelectionChanged?.Invoke(this, e);
 
-        /// <summary>
-        /// 协议下拉变更事件
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="e"></param>
-        private void OnProtocolChanged (object s, EventArgs e)
-            => ProtocolChangeRequested?.Invoke(this, e);
     }
 }

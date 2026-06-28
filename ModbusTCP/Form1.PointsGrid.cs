@@ -42,12 +42,12 @@ namespace PLC {
 
                 case 1: // 当前值
                     if (int.TryParse(raw, out int cur)) targetReg.CurrentValue = cur;
-                    else { cell.Value = targetReg.CurrentValue; Log("当前值格式错误，已还原"); }
+                    else { cell.Value = targetReg.CurrentValue; ILog("当前值格式错误，已还原"); }
                     break;
 
                 case 2: // 目标值
                     if (int.TryParse(raw, out int tgt)) targetReg.TargetValue = tgt;
-                    else { cell.Value = targetReg.TargetValue; Log("目标值格式错误，已还原"); }
+                    else { cell.Value = targetReg.TargetValue; ILog("目标值格式错误，已还原"); }
                     break;
 
                 case 3: // 类型
@@ -67,7 +67,7 @@ namespace PLC {
             if (e.RowIndex < 0 || dgvPLCList.CurrentRow == null) return;
 
             var config = _plcList[dgvPLCList.CurrentRow.Index];
-            if (config.Link.Client == null) { Log("PLC未连接"); return; }
+            if (config.Link.Client == null) { ILog("PLC未连接"); return; }
 
             // 只处理写入列
             if (e.ColumnIndex != dgvPoints.Columns[colWrite.Name].Index) return;
@@ -90,26 +90,26 @@ namespace PLC {
 
             try {
                 await WriteRegisterAsync(config, reg);
-                Log($"写入成功: {AddrToDisplay(reg)} = {reg.TargetValue}");
+                ILog($"写入成功: {AddrToDisplay(reg)} = {reg.TargetValue}");
 
                 // 写入后自动刷新当前值
                 int newVal = await ReadRegisterAsync(config, reg);
                 UpdateGridValue(e.RowIndex, newVal);
             } catch (Exception ex) {
-                Log($"写入失败: {ex.Message}");
+                ILog($"写入失败: {ex.Message}");
             }
         }
 
         // ==================== 添加/删除点 ====================
         private void BtnAddPoint_Click (object sender, EventArgs e) {
-            if (dgvPLCList.CurrentRow == null) { Log("请先选中PLC"); return; }
+            if (dgvPLCList.CurrentRow == null) { ILog("请先选中PLC"); return; }
 
             var config = _plcList[dgvPLCList.CurrentRow.Index];
             var point = AddPointDialog.ShowDialog();
             if (point != null) {
                 config.RegisterSheet.Add(point);
                 LoadPointsToGrid(config);
-                Log($"已添加点: {point.Address}");
+                ILog($"已添加点: {point.Address}");
             }
         }
 
@@ -118,7 +118,7 @@ namespace PLC {
 
             string desc = dgvPoints.Rows[dgvPoints.CurrentRow.Index].Cells[colDesc.Name].Value?.ToString() ?? "";
             if (desc.StartsWith("[轨道")) {
-                Log("轨道配置行不能删除");
+                ILog("轨道配置行不能删除");
                 return;
             }
 
@@ -130,7 +130,7 @@ namespace PLC {
 
             config.RegisterSheet.RemoveAt(pi);
             LoadPointsToGrid(config);
-            Log("已删除选中点");
+            ILog("已删除选中点");
         }
 
         //! ===================== 辅助函数 =====================

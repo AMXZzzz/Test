@@ -42,13 +42,14 @@ namespace PLC {
             _plcFactory = new PluginLoader(typeof(Form1).Assembly);
             _plcFactory.LoadPlugins();
 
+            //! 事件绑定
             HookPlcListEvents();
 
             // 把工厂注入 Presenter(下一步 Presenter 会加这个参数)
             _plcListPresenter = new PlcListPresenter(this, _plcStore, _plcFactory);
 
             // 协议列表推给界面
-            ShowProtocolList(_plcFactory.AvailableProtocols);
+            IShowProtocolList(_plcFactory.AvailableProtocols);
 
             _plcListPresenter.Initialize();
             //! 初始化点读取Task
@@ -82,7 +83,7 @@ namespace PLC {
             //! 默认适配器
             if (cmbAdapter.SelectedIndex == 0) {
                 SelectedLocalIP = "";
-                Log("已切换为默认网络适配器（自动选择）");
+                ILog("已切换为默认网络适配器（自动选择）");
             } else {
                 //! 解析IP地址
                 int start = selected.LastIndexOf('(');
@@ -90,7 +91,7 @@ namespace PLC {
                 //! 提取IP地址
                 if (start > 0 && end > start) {
                     SelectedLocalIP = selected.Substring(start + 1, end - start - 1);
-                    Log($"已应用网络适配器: {selected}");
+                    ILog($"已应用网络适配器: {selected}");
                 }
             }
         }
@@ -129,7 +130,7 @@ namespace PLC {
                     if (list != null && list.Count > 0) {
                         _plcList = list;
                         //RefreshPLCList();
-                        Log($"📂 已加载 {_plcList.Count} 台PLC配置");
+                        ILog($"📂 已加载 {_plcList.Count} 台PLC配置");
                         return;
                     }
                 } catch { }

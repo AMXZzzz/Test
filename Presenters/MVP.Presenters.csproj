@@ -54,6 +54,10 @@
       <Project>{fd83ac88-d00f-413b-9f8e-22f41223ae79}</Project>
       <Name>PLC.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PLC.Services\PLC.Services.csproj">
+      <Project>{F9ECB77A-735E-4FD9-A22E-8F5EB868FDC7}</Project>
+      <Name>PLC.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -60,7 +60,7 @@ namespace PLC {
                                     (DateTime.Now - _plc.LastErrorTime).TotalSeconds > 5;
 
                     if (shouldLog) {
-                        Log($"[{_plc.Link.PlcName}] 读取失败: {ex.Message}");
+                        ILog($"[{_plc.Link.PlcName}] 读取失败: {ex.Message}");
                         _plc.LastError = ex.Message;
                         _plc.LastErrorTime = DateTime.Now;
                     }
@@ -77,8 +77,8 @@ namespace PLC {
         private async void BtnAdjustWidth_Click (object sender, EventArgs e) {
 
             //! 读取宽度
-            if (!decimal.TryParse(txtWidth1.Text, out decimal w1) || w1 <= 0) { Log("❌ 轨道1宽度无效"); return; }
-            if (!decimal.TryParse(txtWidth2.Text, out decimal w2) || w2 <= 0) { Log("❌ 轨道2宽度无效"); return; }
+            if (!decimal.TryParse(txtWidth1.Text, out decimal w1) || w1 <= 0) { ILog("❌ 轨道1宽度无效"); return; }
+            if (!decimal.TryParse(txtWidth2.Text, out decimal w2) || w2 <= 0) { ILog("❌ 轨道2宽度无效"); return; }
 
             //! 计算宽度值, 单位: 0.1mm
             int w1Int = (int)(w1 * 10);
@@ -86,11 +86,11 @@ namespace PLC {
 
             //! PLC链接测试
             var connected = _plcList.FindAll(p => p.Link.Client != null);
-            if (connected.Count == 0) { Log("没有已连接的PLC，请先连接"); return; }
+            if (connected.Count == 0) { ILog("没有已连接的PLC，请先连接"); return; }
 
             //! 写入宽度值
             btnAdjustWidth.Enabled = false;     //! 禁用按钮，防止重复点击
-            Log($"══ 开始一键调宽  轨道1:{w1}mm  轨道2:{w2}mm  共{connected.Count}台 ══");
+            ILog($"══ 开始一键调宽  轨道1:{w1}mm  轨道2:{w2}mm  共{connected.Count}台 ══");
 
             //! 并行写入所有已连接的PLC
             foreach (var p in connected) {
@@ -100,7 +100,7 @@ namespace PLC {
             }
 
             //! 写入完成, 启用按钮
-            Log("══ 一键调宽全部完成 ══");
+            ILog("══ 一键调宽全部完成 ══");
             btnAdjustWidth.Enabled = true;
         }
 
@@ -154,23 +154,23 @@ namespace PLC {
             try {
                 //! 写入轨道1宽度
                 await WriteRegisterAsync(config, config.Track.OneWidthAddr);
-                Log($"[{config.Track.TrackCount} 轨道1] 写入宽度: {config.Track.OneWidthAddr.TargetValue}");
+                ILog($"[{config.Track.TrackCount} 轨道1] 写入宽度: {config.Track.OneWidthAddr.TargetValue}");
                 await Task.Delay(100);
 
                 //! 写入轨道1触发地址
                 await WriteRegisterAsync(config, config.Track.OneTriggerAddr);
-                Log($"[{config.Track.TrackCount} 轨道1] 触发调宽");
+                ILog($"[{config.Track.TrackCount} 轨道1] 触发调宽");
 
                 //! 判断是否有第二轨道
                 if (config.Track.TrackCount >= 2) {
                     //! 写入轨道2宽度
                     await WriteRegisterAsync(config, config.Track.TwoWidthAddr);
-                    Log($"[{config.Track.TrackCount} 轨道2] 写入宽度: {config.Track.TwoWidthAddr.TargetValue}");
+                    ILog($"[{config.Track.TrackCount} 轨道2] 写入宽度: {config.Track.TwoWidthAddr.TargetValue}");
                     await Task.Delay(100);
 
                     //! 写入轨道2触发地址
                     await WriteRegisterAsync(config, config.Track.TwoTriggerAddr);
-                    Log($"[{config.Track.TrackCount} 轨道2] 触发调宽");
+                    ILog($"[{config.Track.TrackCount} 轨道2] 触发调宽");
                 }
 
                 //! 判断第二轨道是否有完成地址
@@ -178,16 +178,16 @@ namespace PLC {
                     //! 等待第二轨道完成
                     bool done = await WaitForStatusAsync(config, config.Track.TwoStatusAddr,
                         config.Track.TwoStatusDoneValue, 15000);
-                    Log(done ? $"✅ [{config.Track.TrackCount} 轨道2] 完成" : $"⚠️ [{config.Track.TrackCount} 轨道2] 超时");
+                    ILog(done ? $"✅ [{config.Track.TrackCount} 轨道2] 完成" : $"⚠️ [{config.Track.TrackCount} 轨道2] 超时");
                 }
                 //! 判断轨道1是否需要等待
                 if (config.Track.OneHasStatus) {
                     //! 等待轨道1调宽完成, 超时10秒
                     bool done = await WaitForStatusAsync(config, config.Track.OneStatusAddr, config.Track.OneStatusDoneValue, 10000);
-                    Log(done ? $"✅ [{config.Track.TrackCount} 轨道1] 完成" : $"⚠️ [{config.Track.TrackCount} 轨道1] 超时");
+                    ILog(done ? $"✅ [{config.Track.TrackCount} 轨道1] 完成" : $"⚠️ [{config.Track.TrackCount} 轨道1] 超时");
                 }
 
-            } catch (Exception ex) { Log($"❌ [{config.Track.TrackCount}] 调宽异常: {ex.Message}"); }
+            } catch (Exception ex) { ILog($"❌ [{config.Track.TrackCount}] 调宽异常: {ex.Message}"); }
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace PLC {
                 }
             }
 
-            Log("PLC 未连接，无法读取");
+            ILog("PLC 未连接，无法读取");
             return 0;
         }
 
@@ -283,7 +283,7 @@ namespace PLC {
             if (config.Link.Client is PLC.IBase.IPlcBase client) {
                 await client.WriteAsync(register);
             } else {
-                Log("PLC 未连接，无法写入");
+                ILog("PLC 未连接，无法写入");
             }
         }
 

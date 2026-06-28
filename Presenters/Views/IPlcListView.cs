@@ -12,35 +12,35 @@ namespace PLC.Presenters.Views {
     public interface IPlcListView {
         //! ============== 属性 :界面当前状态,只读   =============
         //! 选择的 PLC 索引
-        int SelectedPlcIndex { get; }
+        int ISelectedPlcIndex { get; }
 
         //! IP
-        string IpText { get; }
+        string IIpText { get; }
 
         //! 端口
-        string PortText { get; }
+        string IPortText { get; }
 
         //! 协议
-        string SelectedProtocol { get; }
+        string ISelectedProtocol { get; }
 
         //! ============== 方法 :界面操作,由 Presenter 调用   =============
         //! 显示 PLC 列表
-        void ShowPlcList (IReadOnlyList<TcpPlcConfig> plcNames);
+        void IShowPlcList (IReadOnlyList<TcpPlcConfig> plcNames);
 
         //! 显示 PLC 详细信息
-        void ShowPlcDetail (string ip, string port, string protocol);
+        void IShowPlcDetail (string ip, string port, string protocol);
 
         //! 当前协议可选列表
-        void ShowProtocolList (IReadOnlyList<string> protocols);
+        void IShowProtocolList (IReadOnlyList<string> protocols);
 
         //! 选的的PLC
-        void SelectPlc (int index);
+        void ISelectPlc (int index);
 
         //! 确认按钮
-        bool Confirm(string message,string caption);
+        bool IConfirm(string message,string caption);
 
         //! 日志记录
-        void Log (string message);
+        void ILog (string message);
 
 
         //! ============== 事件 :界面操作,由 Presenter 订阅   =============
