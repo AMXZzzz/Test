@@ -54,7 +54,7 @@ namespace PLC.Presenters.Views {
         event EventHandler MoveDownRequested;           //! 下移 PLC
         event EventHandler ApplyIpRequested;            //! 应用 IP
         event EventHandler ApplyPortRequested;          //! 应用端口
-        event EventHandler SelectionChanged;            //! 选择 PLC 改变
+        event EventHandler PlcSelectionChanged;            //! 选择 PLC 改变
         event EventHandler ProtocolChangeRequested;     //! 协议改变
     }
 }

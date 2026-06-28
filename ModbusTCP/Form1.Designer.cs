@@ -66,7 +66,6 @@ namespace PLC {
             this.btnConnect.Size = new System.Drawing.Size(110, 34);
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "连接选中";
-            this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
             // 
             // btnDisconnect
             // 
@@ -75,7 +74,6 @@ namespace PLC {
             this.btnDisconnect.Size = new System.Drawing.Size(110, 34);
             this.btnDisconnect.TabIndex = 1;
             this.btnDisconnect.Text = "断开全部";
-            this.btnDisconnect.Click += new System.EventHandler(this.BtnDisconnect_Click);
             // 
             // btnAddPLC
             // 
@@ -84,7 +82,6 @@ namespace PLC {
             this.btnAddPLC.Size = new System.Drawing.Size(110, 34);
             this.btnAddPLC.TabIndex = 2;
             this.btnAddPLC.Text = "新增PLC";
-            this.btnAddPLC.Click += new System.EventHandler(this.BtnAddPLC_Click);
             // 
             // btnDeletePLC
             // 
@@ -94,7 +91,6 @@ namespace PLC {
             this.btnDeletePLC.Size = new System.Drawing.Size(110, 34);
             this.btnDeletePLC.TabIndex = 3;
             this.btnDeletePLC.Text = "删除选中PLC";
-            this.btnDeletePLC.Click += new System.EventHandler(this.BtnDeletePLC_Click);
             // 
             // btnConnectAll
             // 
@@ -103,7 +99,6 @@ namespace PLC {
             this.btnConnectAll.Size = new System.Drawing.Size(120, 34);
             this.btnConnectAll.TabIndex = 4;
             this.btnConnectAll.Text = "一键连接全部";
-            this.btnConnectAll.Click += new System.EventHandler(this.BtnConnectAll_Click);
             // 
             // btnMovePLCUp
             // 
@@ -112,7 +107,6 @@ namespace PLC {
             this.btnMovePLCUp.Size = new System.Drawing.Size(50, 62);
             this.btnMovePLCUp.TabIndex = 5;
             this.btnMovePLCUp.Text = "↑\n上移";
-            this.btnMovePLCUp.Click += new System.EventHandler(this.BtnMovePLCUp_Click);
             // 
             // btnMovePLCDown
             // 
@@ -121,7 +115,6 @@ namespace PLC {
             this.btnMovePLCDown.Size = new System.Drawing.Size(50, 62);
             this.btnMovePLCDown.TabIndex = 6;
             this.btnMovePLCDown.Text = "↓\n下移";
-            this.btnMovePLCDown.Click += new System.EventHandler(this.BtnMovePLCDown_Click);
             // 
             // btnAdjustWidth
             // 
@@ -211,7 +204,6 @@ namespace PLC {
             this.btnApplyIp.Size = new System.Drawing.Size(55, 28);
             this.btnApplyIp.TabIndex = 15;
             this.btnApplyIp.Text = "应用";
-            this.btnApplyIp.Click += new System.EventHandler(this.BtnApplyIp_Click);
             // 
             // lblPort
             // 
@@ -236,7 +228,6 @@ namespace PLC {
             this.btnApplyPort.Size = new System.Drawing.Size(55, 28);
             this.btnApplyPort.TabIndex = 18;
             this.btnApplyPort.Text = "应用";
-            this.btnApplyPort.Click += new System.EventHandler(this.BtnApplyPort_Click);
             // 
             // lblProtocol
             // 

@@ -101,7 +101,7 @@ namespace PLC {
         /// <param name="e"></param>
         protected override void OnFormClosing (FormClosingEventArgs e) {
             //! 触发关闭事件
-            BtnDisconnect_Click(null, null);
+            //BtnDisconnect_Click(null, null);
             //! 保存配置文件
             SaveToFile();
             //! 关闭窗体
@@ -128,7 +128,7 @@ namespace PLC {
                     var list = JsonConvert.DeserializeObject<List<TcpPlcConfig>>(json);
                     if (list != null && list.Count > 0) {
                         _plcList = list;
-                        RefreshPLCList();
+                        //RefreshPLCList();
                         Log($"📂 已加载 {_plcList.Count} 台PLC配置");
                         return;
                     }
@@ -170,6 +170,6 @@ namespace PLC {
 
 
         //! ====================== 日志系统 ======================
-        private void Log (string msg) => LogHelper.Log(msg);
+        //private void Log (string msg) => LogHelper.Log(msg);
     }
 }

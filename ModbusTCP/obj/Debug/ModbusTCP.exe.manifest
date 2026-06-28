@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ModbusTCP.exe" size="582104">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ModbusTCP.exe" size="589272">
       <assemblyIdentity name="ModbusTCP" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>qBsfwiRQcDkWf+Cb/aku8BR90XRwlQHhtlhEDSKN5ps=</dsig:DigestValue>
+        <dsig:DigestValue>2XV38O6ZIyxdQKaWj9CHsr3IA0yaUe6tEjtWJMO62mk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

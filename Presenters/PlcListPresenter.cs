@@ -27,7 +27,7 @@ namespace PLC.Presenters {
             _view.MoveDownRequested += OnMoveDown;
             _view.ApplyIpRequested += OnApplyIp;
             _view.ApplyPortRequested += OnApplyPort;
-            _view.SelectionChanged += OnSelectionChanged;
+            _view.PlcSelectionChanged += OnSelectionChanged;
             _view.ProtocolChangeRequested += OnProtocolChange;
 
             // 数据变了就刷新列表显示
