@@ -6,7 +6,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using PLC.Models;
 namespace PLC {
     public partial class Form1 : Form {
         //! ====================== 变量 ======================

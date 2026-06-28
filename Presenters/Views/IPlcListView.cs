@@ -1,10 +1,11 @@
-﻿using System;
+﻿using PLC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MVP.Presenters.Views {
+namespace PLC.Presenters.Views {
     /// <summary>
     /// PLC 列表视图契约。Presenter 通过它操作界面,不直接碰控件。
     /// </summary>
@@ -24,7 +25,7 @@ namespace MVP.Presenters.Views {
 
         //! ============== 方法 :界面操作,由 Presenter 调用   =============
         //! 显示 PLC 列表
-        void ShowPlcList (IReadOnlyList<string> plcNames);
+        void ShowPlcList (IReadOnlyList<TcpPlcConfig> plcNames);
 
         //! 显示 PLC 详细信息
         void ShowPlcDetail (string ip, string port, string protocol);
@@ -36,7 +37,7 @@ namespace MVP.Presenters.Views {
         void SelectPlc (int index);
 
         //! 确认按钮
-        void Confirm(string message,string caption);
+        bool Confirm(string message,string caption);
 
         //! 日志记录
         void Log (string message);
