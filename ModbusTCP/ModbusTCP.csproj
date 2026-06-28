@@ -127,7 +127,6 @@
     <Compile Include="Common\LogHelper.cs" />
     <Compile Include="PLC.ModbusTcp\ModbusTcp.cs" />
     <Compile Include="PLC.ModbusTcp\ModbusTcpLib.cs" />
-    <Compile Include="Common\PluginLoader.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
