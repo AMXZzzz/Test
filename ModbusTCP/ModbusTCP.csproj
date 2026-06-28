@@ -154,17 +154,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj">
+    <ProjectReference Include="..\Models\MVP.Models.csproj">
       <Project>{1109c54e-5d5b-4c1d-85eb-3662f9f74891}</Project>
-      <Name>Models</Name>
+      <Name>MVP.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\PLC.Common\PLC.Common.csproj">
       <Project>{fd83ac88-d00f-413b-9f8e-22f41223ae79}</Project>
       <Name>PLC.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Presenters\Presenters.csproj">
+    <ProjectReference Include="..\PLC.Services\PLC.Services.csproj">
+      <Project>{f9ecb77a-735e-4fd9-a22e-8f5eb868fdc7}</Project>
+      <Name>PLC.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Presenters\MVP.Presenters.csproj">
       <Project>{6d323b50-0955-4b7b-9877-51617d096f14}</Project>
-      <Name>Presenters</Name>
+      <Name>MVP.Presenters</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

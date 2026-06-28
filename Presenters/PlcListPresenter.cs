@@ -2,6 +2,7 @@
 using PLC.IBase;
 using PLC.Models;
 using System;
+using PLC.Services;
 
 namespace PLC.Presenters {
     /// <summary>
@@ -13,12 +14,13 @@ namespace PLC.Presenters {
         //! ============== 变量 :界面和数据   =============
         private readonly IPlcListView _view;            //! 间接与UI交互
         private readonly PlcStore _store;               //! 底层数据模块PlcStore
-
+        private readonly IPlcFactory _plcFactory;
 
         //! ============== 初始化 ==============
-        public PlcListPresenter (IPlcListView view, PlcStore store) {
+        public PlcListPresenter (IPlcListView view, PlcStore store, IPlcFactory plcFactory) {
             _view = view;
             _store = store;
+            _plcFactory = plcFactory;
 
             // 绑定View动作
             _view.AddPlcEvent += OnAddPlc;

@@ -1,4 +1,7 @@
 using Newtonsoft.Json;
+using PLC.Models;
+using PLC.Presenters;
+using PLC.Services;
 using S7.Net;
 using System;
 using System.Collections.Generic;
@@ -6,7 +9,6 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PLC.Models;
 namespace PLC {
     public partial class Form1 : Form {
         //! ====================== 变量 ======================
@@ -24,6 +26,11 @@ namespace PLC {
         private static readonly string SavePath = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory, "plc_config.json");
 
+        // 字段:工厂用接口类型声明(依赖抽象,不依赖具体)
+        private readonly IPlcFactory _plcFactory;
+        private readonly PlcStore _plcStore = new PlcStore();
+        private PlcListPresenter _plcListPresenter;
+
         /// <summary>
         /// 窗体构造函数
         /// </summary>
@@ -31,26 +38,19 @@ namespace PLC {
             //! 初始化窗体设计器
             InitializeComponent();
 
-            //! 加载日志
-            LogHelper.LogAdded += logText =>
-            {
-                if (rtbLog.InvokeRequired) {
-                    rtbLog.BeginInvoke(new Action(() => AppendLog(logText)));
-                } else {
-                    AppendLog(logText);
-                }
-            };
+            // 创建唯一的工厂实例。内置协议在主程序自己的程序集里,所以传 typeof(Form1).Assembly
+            _plcFactory = new PluginLoader(typeof(Form1).Assembly);
+            _plcFactory.LoadPlugins();
 
-            //! 加载插件
-            PluginLoader.LoadPlugins();
-            //! 获取协议插件名称并填充列表
-            _protocols.AddRange( PluginLoader.GetAvailableProtocolNames());
-            
-            //! 添加至协议选择控件
-            foreach (var p in _protocols)
-                if (!cmbProtocol.Items.Contains(p))
-                    cmbProtocol.Items.Add(p);
+            HookPlcListEvents();
 
+            // 把工厂注入 Presenter(下一步 Presenter 会加这个参数)
+            _plcListPresenter = new PlcListPresenter(this, _plcStore, _plcFactory);
+
+            // 协议列表推给界面
+            ShowProtocolList(_plcFactory.AvailableProtocols);
+
+            _plcListPresenter.Initialize();
             //! 初始化点读取Task
             InitializeComm();
             //! 加载配置存储文件
