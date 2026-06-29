@@ -4,30 +4,16 @@
   "Documents": [
     {
 <<<<<<< HEAD
+      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{F9ECB77A-735E-4FD9-A22E-8F5EB868FDC7}|PLC.Services\\PLC.Services.csproj|c:\\users\\e.t\\desktop\\modbustcp\\plc.services\\pluginloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9ECB77A-735E-4FD9-A22E-8F5EB868FDC7}|PLC.Services\\PLC.Services.csproj|solutionrelative:plc.services\\pluginloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F9ECB77A-735E-4FD9-A22E-8F5EB868FDC7}|PLC.Services\\PLC.Services.csproj|c:\\users\\e.t\\desktop\\modbustcp\\plc.services\\iplcfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9ECB77A-735E-4FD9-A22E-8F5EB868FDC7}|PLC.Services\\PLC.Services.csproj|solutionrelative:plc.services\\iplcfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-<<<<<<< HEAD
-=======
-=======
-      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|C:\\Users\\E.T\\Desktop\\ModbusTCP\\modbustcp\\form1.comms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.comms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.plclist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.plclist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
->>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
 >>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
     },
     {
@@ -35,18 +21,21 @@
       "RelativeMoniker": "D:0:0:{6D323B50-0955-4B7B-9877-51617D096F14}|Presenters\\Presenters.csproj|solutionrelative:presenters\\plclistpresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F9ECB77A-735E-4FD9-A22E-8F5EB868FDC7}|PLC.Services\\PLC.Services.csproj|c:\\users\\e.t\\desktop\\modbustcp\\plc.services\\pluginloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9ECB77A-735E-4FD9-A22E-8F5EB868FDC7}|PLC.Services\\PLC.Services.csproj|solutionrelative:plc.services\\pluginloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1109C54E-5D5B-4C1D-85EB-3662F9F74891}|Models\\Models.csproj|c:\\users\\e.t\\desktop\\modbustcp\\models\\plcstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1109C54E-5D5B-4C1D-85EB-3662F9F74891}|Models\\Models.csproj|solutionrelative:models\\plcstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
+=======
 =======
 >>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
       "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.plclist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.plclist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|c:\\users\\e.t\\desktop\\modbustcp\\modbustcp\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,11 +46,14 @@
       "RelativeMoniker": "D:0:0:{69BB1E15-A52C-4991-BF1E-9CD581EE1F74}|ModbusTCP\\ModbusTCP.csproj|solutionrelative:modbustcp\\form1.comms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
     },
     {
       "AbsoluteMoniker": "D:0:0:{6D323B50-0955-4B7B-9877-51617D096F14}|Presenters\\Presenters.csproj|c:\\users\\e.t\\desktop\\modbustcp\\presenters\\plclistpresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6D323B50-0955-4B7B-9877-51617D096F14}|Presenters\\Presenters.csproj|solutionrelative:presenters\\plclistpresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
 >>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
     },
     {
       "AbsoluteMoniker": "D:0:0:{6D323B50-0955-4B7B-9877-51617D096F14}|Presenters\\Presenters.csproj|c:\\users\\e.t\\desktop\\modbustcp\\presenters\\views\\iplclistview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -96,10 +88,14 @@
         {
           "DockedWidth": 200,
 <<<<<<< HEAD
+          "SelectedChildIndex": 3,
+=======
+<<<<<<< HEAD
           "SelectedChildIndex": 1,
 =======
           "SelectedChildIndex": 6,
 >>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
           "Children": [
             {
               "$type": "Bookmark",
@@ -108,19 +104,26 @@
             {
               "$type": "Document",
 <<<<<<< HEAD
+              "DocumentIndex": 2,
+=======
+<<<<<<< HEAD
               "DocumentIndex": 0,
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
               "Title": "PluginLoader.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\PLC.Services\\PluginLoader.cs",
               "RelativeDocumentMoniker": "PLC.Services\\PluginLoader.cs",
               "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\PLC.Services\\PluginLoader.cs",
               "RelativeToolTip": "PLC.Services\\PluginLoader.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-28T10:46:45.838Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 5,
+=======
               "DocumentIndex": 1,
               "Title": "IPlcFactory.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\PLC.Services\\IPlcFactory.cs",
@@ -138,6 +141,7 @@
 =======
               "DocumentIndex": 2,
 >>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "ModbusTCP\\Form1.Designer.cs",
@@ -151,27 +155,27 @@
             {
               "$type": "Document",
 <<<<<<< HEAD
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
 =======
 <<<<<<< HEAD
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
 =======
-              "DocumentIndex": 0,
->>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
+              "DocumentIndex": 1,
 >>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.cs",
               "RelativeDocumentMoniker": "ModbusTCP\\Form1.cs",
               "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.cs",
               "RelativeToolTip": "ModbusTCP\\Form1.cs",
-              "ViewState": "AgIAAHkAAAAAAAAAAAAcwIgAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-28T10:00:00.382Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "IPlcListView.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\Presenters\\Views\\IPlcListView.cs",
               "RelativeDocumentMoniker": "Presenters\\Views\\IPlcListView.cs",
@@ -184,13 +188,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "PlcListPresenter.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\Presenters\\PlcListPresenter.cs",
               "RelativeDocumentMoniker": "Presenters\\PlcListPresenter.cs",
               "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\Presenters\\PlcListPresenter.cs",
               "RelativeToolTip": "Presenters\\PlcListPresenter.cs",
-              "ViewState": "AgIAAK8AAAAAAAAAAAAYwLkAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAALUAAAAAAAAAAAAmwCoAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-28T05:16:32.591Z",
               "EditorCaption": ""
@@ -211,6 +215,9 @@
             {
               "$type": "Document",
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
               "DocumentIndex": 4,
               "Title": "Form1.PlcList.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.PlcList.cs",
@@ -218,6 +225,8 @@
               "ToolTip": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.PlcList.cs",
               "RelativeToolTip": "ModbusTCP\\Form1.PlcList.cs",
               "ViewState": "AgIAAGgAAAAAAAAAAAAmwH0AAABKAAAAAAAAAA==",
+<<<<<<< HEAD
+=======
 =======
               "DocumentIndex": 0,
               "Title": "Form1.PlcList.cs",
@@ -227,13 +236,14 @@
               "RelativeToolTip": "ModbusTCP\\Form1.PlcList.cs*",
               "ViewState": "AgIAAGgAAAAAAAAAAAAmwIIAAAAQAAAAAAAAAA==",
 >>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-28T04:44:10.435Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "LogHelper.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Common\\LogHelper.cs",
               "RelativeDocumentMoniker": "ModbusTCP\\Common\\LogHelper.cs",
@@ -246,7 +256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "TcpPlcConfig.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\Models\\config\\TcpPlcConfig.cs",
               "RelativeDocumentMoniker": "Models\\config\\TcpPlcConfig.cs",
@@ -259,7 +269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "TcpLinkConfig.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\Models\\config\\TcpLinkConfig.cs",
               "RelativeDocumentMoniker": "Models\\config\\TcpLinkConfig.cs",
@@ -272,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "ModbusTcpLib.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\PLC.ModbusTcp\\ModbusTcpLib.cs",
               "RelativeDocumentMoniker": "ModbusTCP\\PLC.ModbusTcp\\ModbusTcpLib.cs",
@@ -285,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "AddPlcDialog.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\View\\AddPlcDialog.cs",
               "RelativeDocumentMoniker": "ModbusTCP\\View\\AddPlcDialog.cs",
@@ -299,10 +309,14 @@
             {
               "$type": "Document",
 <<<<<<< HEAD
+              "DocumentIndex": 6,
+=======
+<<<<<<< HEAD
               "DocumentIndex": 7,
 =======
               "DocumentIndex": 3,
 >>>>>>> be7320cba5c2fb05b02d49eb61df64ac0eb9b44c
+>>>>>>> ec65f71f4637c5d6e89caa7ae579451417bb94b4
               "Title": "Form1.Comms.cs",
               "DocumentMoniker": "C:\\Users\\E.T\\Desktop\\ModbusTCP\\ModbusTCP\\Form1.Comms.cs",
               "RelativeDocumentMoniker": "ModbusTCP\\Form1.Comms.cs",
